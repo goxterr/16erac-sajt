@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/puskice", "destination": "/puskice.html" }
+  ]
+}
