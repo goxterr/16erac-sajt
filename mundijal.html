@@ -175,6 +175,18 @@ body{background:
 .leg .d{font-family:'Barlow Condensed';font-weight:600;font-size:13px;color:var(--yellow);letter-spacing:.5px}
 .leg .d span{color:var(--mut);font-weight:500}
 .hint{text-align:center;font-family:'Barlow Condensed';text-transform:uppercase;letter-spacing:3px;font-size:10px;color:#555;margin-top:14px}
+.routewrap{margin-top:10px}
+.routemap{width:100%;height:auto;display:block}
+.routemap .spoke{stroke:rgba(255,210,0,.5);stroke-width:2}
+.routemap .kml{fill:var(--yellow);font-family:'Barlow Condensed';font-weight:700;font-size:15.5px;paint-order:stroke;stroke:#0d0d0d;stroke-width:4.5px;stroke-linejoin:round}
+.routemap .ncirc{fill:#161616;stroke:rgba(255,210,0,.4);stroke-width:1.5}
+.routemap .ccirc{fill:#161616;stroke:var(--yellow);stroke-width:2.4}
+.routemap .nico{font-size:26px}
+.routemap .cico{font-size:32px}
+.routemap .nname{fill:var(--txt);font-family:'Barlow Condensed';font-weight:700;font-size:18.5px;text-transform:uppercase;letter-spacing:.3px}
+.routemap .nrnd{fill:var(--yellow);font-family:'Barlow Condensed';font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+.routemap .bname{fill:var(--txt);font-family:'Barlow Condensed';font-weight:700;font-size:18.5px;text-transform:uppercase;letter-spacing:.3px}
+.routemap .bsub{fill:var(--mut);font-family:'Barlow';font-size:12px}
 .foot{margin-top:20px;text-align:center;font-family:'Barlow Condensed';text-transform:uppercase;letter-spacing:3px;font-size:10px;color:#555}
 .foot b{color:var(--yellow-d)}
 .hidden{display:none!important}
@@ -549,26 +561,48 @@ const overlay=document.getElementById('overlay'), modalBody=document.getElementB
 function openRoute(t,mode){
   mode=mode||MODE;
   const tot=totalOf(t,mode);
-  let html=`
+  const matches=legsOf(t,mode);
+  const N=Math.max(matches.length,1);
+  let VB_W, R;
+  if(N<=3){VB_W=660; R=185;} else if(N<=5){VB_W=760; R=212;} else {VB_W=900; R=236;}
+  const cr=46, nr=30, cx=VB_W/2, VB_H=2*(R+92), cy=VB_H/2;
+  const A0=-Math.PI/2;
+  const esc=x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  let spokes='', kmls='', nodes='';
+  matches.forEach((m,i)=>{
+    const a=A0 + i*2*Math.PI/N;
+    const ux=Math.cos(a), uy=Math.sin(a);
+    const x=cx+R*ux, y=cy+R*uy;
+    const x1=cx+ux*cr, y1=cy+uy*cr, x2=x-ux*nr, y2=y-uy*nr;
+    spokes += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" class="spoke" marker-start="url(#ar)" marker-end="url(#ar)"/>`;
+    const kx=cx+ux*R*0.55, ky=cy+uy*R*0.55;
+    kmls += `<text x="${kx.toFixed(1)}" y="${ky.toFixed(1)}" class="kml" text-anchor="middle" dominant-baseline="central">${fmt(m.km)} km</text>`;
+    const anchor = ux>0.34?'start':(ux<-0.34?'end':'middle');
+    const lx=x+ux*(nr+13), ly=y+uy*(nr+13);
+    nodes += `<g><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${nr}" class="ncirc"/>`+
+      `<text x="${x.toFixed(1)}" y="${(y+1).toFixed(1)}" class="nico" text-anchor="middle" dominant-baseline="central">🏟️</text>`+
+      `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}">`+
+      `<tspan x="${lx.toFixed(1)}" dy="-1" class="nname">${esc(m.city)}</tspan>`+
+      `<tspan x="${lx.toFixed(1)}" dy="15" class="nrnd">${esc(m.label)}</tspan></text></g>`;
+  });
+  const svg = `<svg viewBox="0 0 ${VB_W} ${VB_H}" class="routemap" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="7.5" refY="4.5" orient="auto-start-reverse"><path d="M1.5,1 L8,4.5 L1.5,8" fill="none" stroke="var(--yellow)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+    ${spokes}
+    ${kmls}
+    <circle cx="${cx}" cy="${cy}" r="${cr}" class="ccirc"/>
+    <text x="${cx}" y="${cy+2}" class="cico" text-anchor="middle" dominant-baseline="central">🏠</text>
+    <text x="${cx}" y="${cy+cr+23}" class="bname" text-anchor="middle">${esc(t.base)}</text>
+    <text x="${cx}" y="${cy+cr+41}" class="bsub" text-anchor="middle">baza reprezentacije</text>
+    ${nodes}
+  </svg>`;
+  const html=`
     <div class="mhead">
       <img class="flag-lg" src="${FLAG(t.code)}" alt="">
       <div class="mt"><h3>${t.sr}</h3><div class="mg">Grupa ${t.g}</div></div>
       <div class="mtot"><div class="l">Ukupno</div><div class="v">${fmt(tot)}<small>km</small></div></div>
     </div>
-    <div class="route">`;
-  const matches=legsOf(t,mode);
-  const seq=[{t:'base',n:t.base}];
-  matches.forEach(m=>{ seq.push({t:'city',n:m.city,km:m.km,label:m.label}); seq.push({t:'base',n:t.base,km:m.km}); });
-  seq.forEach((s,idx)=>{
-    if(idx>0){
-      const back=s.t==='base';
-      html+=`<div class="leg"><div class="line"><i></i></div><div class="d">${fmt(s.km)} km <span>${back?'· povratak u bazu':''}</span></div></div>`;
-    }
-    const ico=s.t==='base'?'🏠':'🏟️';
-    const desc = s.t==='base' ? 'baza reprezentacije' : s.label;
-    html+=`<div class="stop"><div class="dot ${s.t}">${ico}</div><div class="lab">${s.n}<small>${desc}</small></div></div>`;
-  });
-  html+=`</div><div class="hint">Vazdušna udaljenost između tačaka · zbir = ukupno</div>`;
+    <div class="routewrap">${svg}</div>
+    <div class="hint">Vazdušna udaljenost · baza → grad → baza · zbir = ukupno</div>`;
   modalBody.innerHTML=html;
   overlay.classList.add('show');
 }
