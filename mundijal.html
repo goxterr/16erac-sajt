@@ -149,7 +149,7 @@ body{background:
 .overlay{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.78);backdrop-filter:blur(4px);
   display:none;align-items:center;justify-content:center;padding:24px}
 .overlay.show{display:flex;animation:fade .25s ease}
-.modal{position:relative;width:min(560px,94vw);max-height:88vh;overflow:auto;background:linear-gradient(165deg,#181818,#101010);
+.modal{position:relative;width:min(680px,96vw);max-height:92vh;overflow:auto;background:linear-gradient(165deg,#181818,#101010);
   border:1px solid rgba(255,210,0,.25);border-radius:18px;padding:26px 28px;box-shadow:0 30px 80px rgba(0,0,0,.7)}
 .modal::-webkit-scrollbar{width:8px}.modal::-webkit-scrollbar-thumb{background:rgba(255,210,0,.3);border-radius:4px}
 .mhead{display:flex;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.08)}
@@ -175,18 +175,29 @@ body{background:
 .leg .d{font-family:'Barlow Condensed';font-weight:600;font-size:13px;color:var(--yellow);letter-spacing:.5px}
 .leg .d span{color:var(--mut);font-weight:500}
 .hint{text-align:center;font-family:'Barlow Condensed';text-transform:uppercase;letter-spacing:3px;font-size:10px;color:#555;margin-top:14px}
-.routewrap{margin-top:10px}
+.routewrap{margin-top:14px}
 .routemap{width:100%;height:auto;display:block}
-.routemap .spoke{stroke:rgba(255,210,0,.5);stroke-width:2}
-.routemap .kml{fill:var(--yellow);font-family:'Barlow Condensed';font-weight:700;font-size:15.5px;paint-order:stroke;stroke:#0d0d0d;stroke-width:4.5px;stroke-linejoin:round}
-.routemap .ncirc{fill:#161616;stroke:rgba(255,210,0,.4);stroke-width:1.5}
-.routemap .ccirc{fill:#161616;stroke:var(--yellow);stroke-width:2.4}
-.routemap .nico{font-size:26px}
-.routemap .cico{font-size:32px}
-.routemap .nname{fill:var(--txt);font-family:'Barlow Condensed';font-weight:700;font-size:18.5px;text-transform:uppercase;letter-spacing:.3px}
-.routemap .nrnd{fill:var(--yellow);font-family:'Barlow Condensed';font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
-.routemap .bname{fill:var(--txt);font-family:'Barlow Condensed';font-weight:700;font-size:18.5px;text-transform:uppercase;letter-spacing:.3px}
-.routemap .bsub{fill:var(--mut);font-family:'Barlow';font-size:12px}
+.routemap .spoke{stroke:var(--yellow);stroke-width:3;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset .3s ease}
+.routemap .leg-g.show .spoke{stroke-dashoffset:0}
+.routemap .kmbig{fill:var(--yellow);font-family:'Barlow Condensed';font-weight:700;font-size:20px;paint-order:stroke;stroke:#0d0d0d;stroke-width:4.5px;stroke-linejoin:round}
+.routemap .kmsub{fill:#ffffff;font-family:'Barlow Condensed';font-weight:600;font-size:13px;paint-order:stroke;stroke:#0d0d0d;stroke-width:4px;stroke-linejoin:round}
+.routemap .kmbg{fill:rgba(12,12,12,.82)}
+.routemap .ncirc{fill:#141414;stroke:rgba(255,210,0,.5);stroke-width:2}
+.routemap .ccirc{fill:#141414;stroke:var(--yellow);stroke-width:3}
+.routemap .nico{font-size:27px}
+.routemap .cico{font-size:31px}
+.routemap .ncity{fill:#fff;font-family:'Barlow Condensed';font-weight:700;text-transform:uppercase;letter-spacing:.2px}
+.routemap .cname{fill:#fff;font-family:'Barlow Condensed';font-weight:700;text-transform:uppercase;letter-spacing:.2px}
+.routemap .nrnd{fill:var(--yellow);font-family:'Barlow Condensed';font-weight:700;font-size:15.5px;text-transform:uppercase;letter-spacing:.6px;paint-order:stroke;stroke:#0d0d0d;stroke-width:3.5px;stroke-linejoin:round}
+.routemap .center-g{opacity:0;transition:opacity .25s ease}
+.routemap .center-g.show{opacity:1}
+.routemap .cpop{transform-box:fill-box;transform-origin:center;transform:scale(.45);transition:transform .32s cubic-bezier(.2,.8,.3,1.3)}
+.routemap .center-g.show .cpop{transform:scale(1)}
+.routemap .leg-g{opacity:0;transition:opacity .22s ease}
+.routemap .leg-g.show{opacity:1}
+.routemap .npop{transform-box:fill-box;transform-origin:center;transform:scale(.35);transition:transform .3s cubic-bezier(.2,.8,.3,1.35)}
+.routemap .leg-g.show .npop{transform:scale(1)}
+@media(prefers-reduced-motion:reduce){.routemap .center-g,.routemap .leg-g{opacity:1}.routemap .cpop,.routemap .npop{transform:none}.routemap .spoke{stroke-dashoffset:0}}
 .foot{margin-top:20px;text-align:center;font-family:'Barlow Condensed';text-transform:uppercase;letter-spacing:3px;font-size:10px;color:#555}
 .foot b{color:var(--yellow-d)}
 .hidden{display:none!important}
@@ -269,7 +280,7 @@ footer{position:relative;z-index:10;border-top:1px solid rgba(255,210,0,.16);mar
   .glist{flex-direction:column;gap:10px}
   .gcol{width:100%}
   .ctrl-layout{display:none}
-  .modal{padding:22px 18px}
+  .modal{padding:16px 13px}
   .mhead .mt h3{font-size:22px} .mhead .mtot .v{font-size:24px}
 }
 .mjemblem{position:absolute;right:16px;top:50%;transform:translateY(-50%);width:88px;height:auto;opacity:.13;pointer-events:none;z-index:0;filter:saturate(.85)}
@@ -370,7 +381,12 @@ const MAX_G = Math.max(...TEAMS.map(t=>t.total));
 const MAX_U = Math.max(...TEAMS.map(t=>t.uTotal));
 
 /* state */
-let MODE='uku';        // 'uku' | 'grupa'
+/* ====== PREKIDAC: prikaz UKUPNO taba ======
+   false = UKUPNO sakriven (stranica otvara GRUPNU FAZU)
+   true  = UKUPNO prikazan (podrazumevano)
+   >>> kad objavis drugi video, promeni false u true i ponovo okaci mundijal.html <<< */
+const SHOW_UKUPNO = false;
+let MODE = SHOW_UKUPNO ? 'uku' : 'grupa';
 let sortDir='desc';    // 'desc' | 'asc'
 let layout=2;          // 2 | 1
 
@@ -558,42 +574,71 @@ document.querySelectorAll('.ctrl-layout').forEach(b=>b.onclick=()=>{
 
 /* ---- ROUTE MODAL ---- */
 const overlay=document.getElementById('overlay'), modalBody=document.getElementById('modalBody');
+function fitLines(name, innerW, maxFs){
+  const words=String(name).split(/\s+/).filter(Boolean);
+  let lines;
+  if(words.length<=1) lines=[words[0]||''];
+  else if(words.length===2) lines=words;
+  else { const mid=Math.ceil(words.length/2); lines=[words.slice(0,mid).join(' '),words.slice(mid).join(' ')]; }
+  const maxLen=Math.max(1,...lines.map(l=>l.length));
+  let fs=innerW/(maxLen*0.53);
+  fs=Math.max(9.5, Math.min(maxFs, fs));
+  return {lines, fs};
+}
 function openRoute(t,mode){
   mode=mode||MODE;
   const tot=totalOf(t,mode);
   const matches=legsOf(t,mode);
   const N=Math.max(matches.length,1);
-  let VB_W, R;
-  if(N<=3){VB_W=660; R=185;} else if(N<=5){VB_W=760; R=212;} else {VB_W=900; R=236;}
-  const cr=46, nr=30, cx=VB_W/2, VB_H=2*(R+92), cy=VB_H/2;
-  const A0=-Math.PI/2;
+  const cr=64,nr=52;
+  let R; if(N<=3){R=196;} else if(N<=5){R=208;} else {R=222;}
+  const cx=420,cy=420,A0=-Math.PI/2;
   const esc=x=>String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;');
-  let spokes='', kmls='', nodes='';
+  const nameSVG=(name,x,y,rad,maxFs,cls)=>{
+    const fit=fitLines(name, rad*1.55, maxFs), n=fit.lines.length;
+    const y0 = n===1 ? y+rad*0.30 : y+rad*0.12;
+    return fit.lines.map((ln,li)=>{ const ly=y0+li*(fit.fs+1);
+      return `<text x="${x.toFixed(1)}" y="${ly.toFixed(1)}" class="${cls}" font-size="${fit.fs.toFixed(1)}" data-fitr="${rad}" data-dy="${Math.abs(ly-y).toFixed(1)}" text-anchor="middle" dominant-baseline="central">${esc(ln)}</text>`;
+    }).join('');
+  };
+  let legsSVG='';
   matches.forEach((m,i)=>{
-    const a=A0 + i*2*Math.PI/N;
-    const ux=Math.cos(a), uy=Math.sin(a);
+    const a=A0+i*2*Math.PI/N, ux=Math.cos(a), uy=Math.sin(a);
     const x=cx+R*ux, y=cy+R*uy;
     const x1=cx+ux*cr, y1=cy+uy*cr, x2=x-ux*nr, y2=y-uy*nr;
-    spokes += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" class="spoke" marker-start="url(#ar)" marker-end="url(#ar)"/>`;
-    const kx=cx+ux*R*0.55, ky=cy+uy*R*0.55;
-    kmls += `<text x="${kx.toFixed(1)}" y="${ky.toFixed(1)}" class="kml" text-anchor="middle" dominant-baseline="central">${fmt(m.km)} km</text>`;
-    const anchor = ux>0.34?'start':(ux<-0.34?'end':'middle');
+    const len=Math.hypot(x2-x1,y2-y1).toFixed(1);
+    const kd=(cr+(R-nr))/2, kx=cx+ux*kd, ky=cy+uy*kd;
+    const anchor=ux>0.34?'start':(ux<-0.34?'end':'middle');
     const lx=x+ux*(nr+13), ly=y+uy*(nr+13);
-    nodes += `<g><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${nr}" class="ncirc"/>`+
-      `<text x="${x.toFixed(1)}" y="${(y+1).toFixed(1)}" class="nico" text-anchor="middle" dominant-baseline="central">🏟️</text>`+
-      `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}">`+
-      `<tspan x="${lx.toFixed(1)}" dy="-1" class="nname">${esc(m.city)}</tspan>`+
-      `<tspan x="${lx.toFixed(1)}" dy="15" class="nrnd">${esc(m.label)}</tspan></text></g>`;
+    const bigTxt=`${fmt(2*m.km)} km`, subTxt=`(2 × ${fmt(m.km)} km)`;
+    const w=Math.max(bigTxt.length*11.6, subTxt.length*7.7)+18;
+    legsSVG+=`<g class="leg-g" style="--len:${len}">`+
+      `<line class="spoke" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" marker-end="url(#ar)"/>`+
+      `<g class="node"><g class="npop">`+
+        `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${nr}" class="ncirc"/>`+
+        `<text x="${x.toFixed(1)}" y="${(y-nr*0.44).toFixed(1)}" class="nico" text-anchor="middle" dominant-baseline="central">🏟️</text>`+
+        nameSVG(m.city,x,y,nr,15,'ncity')+
+      `</g>`+
+        `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" class="nrnd" text-anchor="${anchor}" dominant-baseline="central">${esc(m.label)}</text>`+
+      `</g>`+
+      `<g class="km-g">`+
+        `<rect class="kmbg" x="${(kx-w/2).toFixed(1)}" y="${(ky-21).toFixed(1)}" width="${w.toFixed(1)}" height="42" rx="10"/>`+
+        `<text class="km" text-anchor="middle">`+
+          `<tspan class="kmbig" x="${kx.toFixed(1)}" y="${ky.toFixed(1)}" dy="-4">${bigTxt}</tspan>`+
+          `<tspan class="kmsub" x="${kx.toFixed(1)}" y="${ky.toFixed(1)}" dy="15">${subTxt}</tspan></text>`+
+      `</g>`+
+    `</g>`;
   });
-  const svg = `<svg viewBox="0 0 ${VB_W} ${VB_H}" class="routemap" xmlns="http://www.w3.org/2000/svg">
-    <defs><marker id="ar" markerWidth="10" markerHeight="10" refX="7.5" refY="4.5" orient="auto-start-reverse"><path d="M1.5,1 L8,4.5 L1.5,8" fill="none" stroke="var(--yellow)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-    ${spokes}
-    ${kmls}
-    <circle cx="${cx}" cy="${cy}" r="${cr}" class="ccirc"/>
-    <text x="${cx}" y="${cy+2}" class="cico" text-anchor="middle" dominant-baseline="central">🏠</text>
-    <text x="${cx}" y="${cy+cr+23}" class="bname" text-anchor="middle">${esc(t.base)}</text>
-    <text x="${cx}" y="${cy+cr+41}" class="bsub" text-anchor="middle">baza reprezentacije</text>
-    ${nodes}
+  const svg=`<svg class="routemap" xmlns="http://www.w3.org/2000/svg">
+    <defs><marker id="ar" viewBox="0 0 10 10" markerWidth="14" markerHeight="14" refX="8.6" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1,1 L9,5 L1,9 L3.4,5 Z" fill="var(--yellow)"/></marker></defs>
+    <g class="scene">
+    <g class="center-g"><g class="cpop">
+      <circle cx="${cx}" cy="${cy}" r="${cr}" class="ccirc"/>
+      <text x="${cx}" y="${(cy-cr*0.42).toFixed(1)}" class="cico" text-anchor="middle" dominant-baseline="central">🏠</text>
+      ${nameSVG(t.base,cx,cy,cr,16,'cname')}
+    </g></g>
+    ${legsSVG}
+    </g>
   </svg>`;
   const html=`
     <div class="mhead">
@@ -602,9 +647,25 @@ function openRoute(t,mode){
       <div class="mtot"><div class="l">Ukupno</div><div class="v">${fmt(tot)}<small>km</small></div></div>
     </div>
     <div class="routewrap">${svg}</div>
-    <div class="hint">Vazdušna udaljenost · baza → grad → baza · zbir = ukupno</div>`;
+    <div class="hint">Hronološki redosled mečeva · baza → grad → baza</div>`;
   modalBody.innerHTML=html;
   overlay.classList.add('show');
+  modalBody.querySelectorAll('[data-fitr]').forEach(txt=>{ try{
+    const r=+txt.dataset.fitr, dy=Math.min(+txt.dataset.dy, r-3);
+    const avail=2*Math.sqrt(Math.max(4, r*r-dy*dy))-10, w=txt.getBBox().width;
+    if(w>avail){ txt.setAttribute('font-size', Math.max(7, parseFloat(txt.getAttribute('font-size'))*avail/w).toFixed(1)); }
+  }catch(e){} });
+  const svgEl=modalBody.querySelector('.routemap'), scene=svgEl&&svgEl.querySelector('.scene');
+  if(scene){ try{ const bb=scene.getBBox(), p=18;
+    svgEl.setAttribute('viewBox',(bb.x-p).toFixed(1)+' '+(bb.y-p).toFixed(1)+' '+(bb.width+2*p).toFixed(1)+' '+(bb.height+2*p).toFixed(1));
+  }catch(e){} }
+  (window.__rt||[]).forEach(clearTimeout); window.__rt=[];
+  const cg=modalBody.querySelector('.center-g');
+  requestAnimationFrame(()=>{ if(cg) cg.classList.add('show'); });
+  const step=Math.min(130, Math.round(1100/N));
+  modalBody.querySelectorAll('.leg-g').forEach((g,idx)=>{
+    window.__rt.push(setTimeout(()=>g.classList.add('show'), 40+idx*step));
+  });
 }
 document.getElementById('closeBtn').onclick=()=>overlay.classList.remove('show');
 overlay.onclick=e=>{if(e.target===overlay)overlay.classList.remove('show')};
@@ -634,6 +695,12 @@ function animateGroups(){
   document.querySelectorAll('#hero-grp .card').forEach((c,i)=>{c.style.animationDelay=(0.05+i*0.1)+'s';c.classList.add('in')});
   document.querySelectorAll('#hero-grp .num').forEach((el,i)=>setTimeout(()=>countUp(el,+el.dataset.count,1300),100+i*120));
   if(!groupsBuilt){ groupsBuilt=true; renderGroups(true); }
+}
+if(!SHOW_UKUPNO){
+  const ut=document.querySelector('.tab[data-view="uku"]');
+  if(ut){ ut.style.display='none'; ut.classList.remove('active'); }
+  const it=document.querySelector('.tab[data-view="ind"]');
+  if(it) it.classList.add('active');
 }
 updateControls();
 window.addEventListener('load',()=>{
