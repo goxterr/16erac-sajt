@@ -279,8 +279,10 @@ footer{position:relative;z-index:10;border-top:1px solid rgba(255,210,0,.16);mar
 .gcard .imgwrap{overflow:hidden}
 .gcard img.cover{cursor:zoom-in}
 .ribbon{position:absolute;top:50%;left:-16%;width:132%;transform:translateY(-50%) rotate(-20deg);
-  background:rgba(255,210,0,.72);box-shadow:0 6px 22px rgba(0,0,0,.35);padding:11px 0;text-align:center;pointer-events:none;z-index:3}
-.ribbon span{font-family:'Anton';text-transform:uppercase;letter-spacing:5px;font-size:clamp(19px,3vw,29px);color:var(--ink);text-shadow:0 1px 0 rgba(255,255,255,.25)}
+  background:rgba(255,210,0,.72);box-shadow:0 6px 22px rgba(0,0,0,.35);padding:.60em 0 .28em;text-align:center;pointer-events:none;z-index:3;font-size:clamp(19px,3vw,29px);line-height:1}
+.ribbon span{display:inline-block;font-family:'Anton';text-transform:uppercase;letter-spacing:5px;text-indent:5px;font-size:1em;line-height:1;color:var(--ink);text-shadow:0 1px 0 rgba(255,255,255,.25);transform-origin:center;animation:hb 1.5s ease-in-out infinite;will-change:transform}
+@keyframes hb{0%,100%{transform:scale(1)}12%{transform:scale(1.06)}24%{transform:scale(1)}36%{transform:scale(1.10)}52%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.ribbon span{animation:none}}
 /* istekle igre: duplo manje + crno-bele */
 #gv-past{grid-template-columns:repeat(4,1fr);gap:18px}
 .gcard.past img.cover{filter:grayscale(1);transition:filter .25s}
@@ -295,7 +297,14 @@ footer{position:relative;z-index:10;border-top:1px solid rgba(255,210,0,.16);mar
 /* lightbox */
 .lightbox{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
 .lightbox.show{display:flex}
-.lightbox img{max-width:min(92vw,760px);max-height:90vh;width:auto;height:auto;border-radius:14px;box-shadow:0 24px 70px rgba(0,0,0,.7)}
+.lb-fig{max-width:min(92vw,720px);max-height:92vh;display:flex;flex-direction:column;cursor:auto;box-shadow:0 24px 70px rgba(0,0,0,.7);border-radius:16px}
+.lb-fig img{width:100%;height:auto;max-height:calc(92vh - 68px);object-fit:contain;border-radius:16px 16px 0 0;display:block}
+.lb-cap{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-top:none;border-radius:0 0 16px 16px;padding:12px 20px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px}
+.lb-spon{justify-self:center;display:flex;flex-direction:column;align-items:center;gap:3px}
+.lb-spon .sl{font-family:'Barlow Condensed';text-transform:uppercase;letter-spacing:1.5px;font-size:8.5px;color:var(--mut)}
+.lb-spon img{height:30px;width:auto;background:#fff;border-radius:8px;padding:4px 6px}
+.lb-title{font-family:'Anton';text-transform:uppercase;font-size:19px;letter-spacing:.5px;justify-self:start}
+.lb-period{font-family:'Barlow Condensed';font-weight:600;text-transform:uppercase;letter-spacing:2px;font-size:13px;color:var(--yellow);white-space:nowrap;justify-self:end}
 .lightbox .lb-close{position:absolute;top:14px;right:22px;color:#fff;font-size:40px;line-height:1;cursor:pointer;opacity:.85;font-family:'Barlow'}
 .lightbox .lb-close:hover{opacity:1}
 </style>
@@ -326,7 +335,7 @@ footer{position:relative;z-index:10;border-top:1px solid rgba(255,210,0,.16);mar
   <div class="wrap">
     <div class="kick">★ Nagradne igre & darivanja ★</div>
     <h1 class="gv-title">GIVE<span>AWAY</span></h1>
-    <p class="gv-lead">Ovde se nalaze aktuelne igre i darivanja.<br>Ako želite da budete sponzor igre, kontaktirajte me na mail:</p>
+    <p class="gv-lead">Ako želite da budete sponzor igre, kontaktirajte me na mail:</p>
     <div class="gv-mail" id="gv-mail"></div>
   </div>
 </section>
@@ -352,7 +361,13 @@ footer{position:relative;z-index:10;border-top:1px solid rgba(255,210,0,.16);mar
   </div>
 </section>
 
-<div class="lightbox" id="lightbox"><span class="lb-close" id="lbClose">&times;</span><img id="lbImg" src="" alt="Nagradna igra"></div>
+<div class="lightbox" id="lightbox">
+  <span class="lb-close" id="lbClose">&times;</span>
+  <figure class="lb-fig">
+    <img id="lbImg" src="" alt="Nagradna igra">
+    <figcaption class="lb-cap"><span class="lb-title" id="lbTitle"></span><span class="lb-spon" id="lbSpon"></span><span class="lb-period" id="lbPeriod"></span></figcaption>
+  </figure>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -421,7 +436,17 @@ document.getElementById('gv-past').innerHTML   = past.map(g=>gcardHTML(g,true)).
 
 /* lightbox: klik na sliku -> otvori u boji */
 const lb=document.getElementById('lightbox'), lbImg=document.getElementById('lbImg');
-document.querySelectorAll('.gcard img.cover').forEach(im=>{ im.onclick=()=>{ lbImg.src=im.getAttribute('src'); lb.classList.add('show'); }; });
+document.querySelectorAll('.gcard').forEach(card=>{
+  const im=card.querySelector('img.cover'); if(!im) return;
+  im.onclick=()=>{
+    lbImg.src=im.getAttribute('src');
+    document.getElementById('lbTitle').textContent=card.querySelector('.ct').textContent;
+    document.getElementById('lbPeriod').textContent=card.querySelector('.cp').textContent;
+    const sp=card.querySelector('.spon img');
+    document.getElementById('lbSpon').innerHTML = sp ? '<span class="sl">Sponzor</span><img src="'+sp.getAttribute('src')+'" alt="">' : '';
+    lb.classList.add('show');
+  };
+});
 document.getElementById('lbClose').onclick=()=>lb.classList.remove('show');
 lb.onclick=e=>{ if(e.target===lb) lb.classList.remove('show'); };
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') lb.classList.remove('show'); });
