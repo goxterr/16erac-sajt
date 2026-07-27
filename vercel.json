@@ -1,5 +1,4 @@
 {
-  "rewrites": [
-    { "source": "/puskice", "destination": "/puskice.html" }
-  ]
+  "cleanUrls": true,
+  "trailingSlash": false
 }
