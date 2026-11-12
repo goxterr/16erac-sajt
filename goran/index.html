@@ -307,6 +307,7 @@ const PROJECTS = [
       { f: "lesnici.webp", sr: "Sajt za poručivanje", en: "Ordering site" },
       { f: "lesnici-qr.webp", sr: "QR kod za uplatu sa iznosom za tog kupca", en: "Payment QR code with the buyer's amount" },
       { f: "lesnici-tura.webp", sr: "Virtuelna tura kroz voćnjak", en: "Virtual orchard tour" },
+      { f: "lesnici-tura-kesa.webp", sr: "Kraj ture: lešnici spremni u kesi", en: "End of the tour: hazelnuts ready in the bag" },
       { f: "lesnici-admin.webp", sr: "Admin panel", en: "Admin panel" }
     ],
     intro_sr: "Sajt koji sam napravio da automatizujem prodaju lešnika kolegama. Umesto poruka i ručnog vođenja tabele, porudžbine, uplate i obaveštenja idu same, a sve vodim iz jednog admin panela.",
@@ -553,6 +554,7 @@ function renderProjects(lang){
     media.append(thumb);
     if (p.imgs.length > 1){
       const strip = el("div","strip");
+      strip.style.gridTemplateColumns = "repeat(" + Math.max(4, p.imgs.length) + ", minmax(0,1fr))";
       p.imgs.forEach((im, i) => {
         const b = el("button","mini"); b.type = "button";
         b.setAttribute("aria-label", T[lang].zoom + ": " + im[lang]);
