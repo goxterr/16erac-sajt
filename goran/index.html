@@ -78,15 +78,30 @@ h2{margin:0 0 24px;font-weight:800;font-variation-settings:"wdth" 118;font-size:
 /* Projekti */
 .projects{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .project{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:28px;align-items:start;padding:28px 0;border-bottom:1px solid var(--line)}
-.thumb{display:block;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface);aspect-ratio:16/10;transition:border-color .2s}
-.thumb img{width:100%;height:100%;object-fit:cover;object-position:top center}
-a.thumb:hover{border-color:var(--lime)}
-.project-head{display:flex;justify-content:space-between;align-items:baseline;gap:6px 16px;flex-wrap:wrap}
+.thumb{position:relative;display:block;width:100%;padding:0;margin:0;font:inherit;color:inherit;cursor:zoom-in;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface);aspect-ratio:16/10;transition:border-color .2s}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .35s}
+.thumb .zoom{position:absolute;right:10px;bottom:10px;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(10,28,19,.78);color:var(--lime);border:1px solid rgba(200,240,60,.35);opacity:.9;transition:opacity .2s}
+.thumb .zoom svg{width:17px;height:17px}
+.thumb:hover{border-color:var(--lime)}
+.thumb:hover img{transform:scale(1.03)}
+
+/* Uvećana slika */
+.lightbox{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:clamp(16px,4vw,56px);background:rgba(6,16,11,.88);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.lightbox[hidden]{display:none}
+.lightbox figure{margin:0;max-width:min(1440px,100%);display:flex;flex-direction:column;gap:14px}
+.lightbox img{max-width:100%;max-height:calc(100vh - 150px);max-height:calc(100svh - 150px);width:auto;height:auto;border-radius:12px;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.5);margin:0 auto}
+.lightbox figcaption{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-weight:800;font-variation-settings:"wdth" 110;font-size:1.25rem}
+.lb-close{position:fixed;top:16px;right:16px;width:44px;height:44px;border-radius:999px;border:1px solid var(--line);background:rgba(21,54,42,.9);color:var(--text);font:600 1.5rem/1 var(--font);cursor:pointer}
+.lb-close:hover{border-color:var(--lime);color:var(--lime)}
+body.lb-open{overflow:hidden}
+.project-head{display:flex;justify-content:space-between;align-items:center;gap:6px 16px;flex-wrap:wrap}
 .project h3{margin:0;font-weight:800;font-variation-settings:"wdth" 110;font-size:clamp(1.25rem,1.8vw,1.55rem);line-height:1.15}
 .project h3 a{text-decoration:none}
 .project h3 a:hover{color:var(--lime)}
 .status{font-size:.875rem;color:var(--muted);white-space:nowrap}
-a.status{color:var(--lime);text-underline-offset:3px;text-decoration-color:rgba(200,240,60,.4)}
+a.status,.lb-link{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;font-weight:600;font-size:.8125rem;line-height:1;color:var(--text);text-decoration:none;border:1px solid var(--line);background:rgba(21,54,42,.7);transition:border-color .2s, background .2s, color .2s;white-space:nowrap}
+a.status svg,.lb-link svg{width:13px;height:13px;flex:none;color:var(--lime)}
+a.status:hover,.lb-link:hover{border-color:var(--lime);background:var(--lime-soft);color:var(--lime)}
 .project p{margin:8px 0 12px;color:var(--text-2)}
 .features{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:5px;font-size:.9375rem;color:var(--text-2)}
 .features li{position:relative;padding-left:18px;line-height:1.45}
@@ -200,6 +215,11 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
   </main>
 </div>
 
+<div class="lightbox" id="lb" role="dialog" aria-modal="true" aria-labelledby="lbCap" hidden>
+  <button class="lb-close" id="lbClose" type="button" aria-label="Zatvori">×</button>
+  <figure><img id="lbImg" alt=""><figcaption><span id="lbCap"></span><span id="lbLink"></span></figcaption></figure>
+</div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -307,6 +327,8 @@ const T = {
     prototype: "Interni prototip",
     soon: "Link uskoro",
     video: "Video sadržaj",
+    zoom: "Uvećaj sliku",
+    close: "Zatvori",
     copied: "Otvaram mejl. Adresa je i kopirana: bilic.goran7@gmail.com"
   },
   en: {
@@ -324,6 +346,8 @@ const T = {
     prototype: "Internal prototype",
     soon: "Link coming soon",
     video: "Video content",
+    zoom: "Enlarge image",
+    close: "Close",
     copied: "Opening your email app. The address is also copied: bilic.goran7@gmail.com"
   }
 };
@@ -332,6 +356,32 @@ function host(u){ try{ const x=new URL(u); return x.host + (x.pathname.length > 
 function el(tag, cls, text){ const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
 function linkify(e, url){ e.href=url; e.target="_blank"; e.rel="noopener"; return e; }
 
+const EXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+function siteLink(url, cls){ const a = linkify(el("a", cls), url); a.append(document.createTextNode(host(url))); a.insertAdjacentHTML("beforeend", EXT); return a; }
+
+/* Uvećana slika projekta */
+let lbLast = null;
+function openLightbox(p, name, lang){
+  const lb = document.getElementById("lb");
+  document.getElementById("lbImg").src = "/goran/shot-" + p.img;
+  document.getElementById("lbImg").alt = name;
+  document.getElementById("lbCap").textContent = name;
+  const holder = document.getElementById("lbLink"); holder.textContent = "";
+  if (p.url) holder.append(siteLink(p.url, "lb-link"));
+  document.getElementById("lbClose").setAttribute("aria-label", T[lang].close);
+  lbLast = document.activeElement;
+  lb.hidden = false; document.body.classList.add("lb-open");
+  document.getElementById("lbClose").focus();
+}
+function closeLightbox(){
+  const lb = document.getElementById("lb"); if (lb.hidden) return;
+  lb.hidden = true; document.body.classList.remove("lb-open");
+  if (lbLast) lbLast.focus();
+}
+document.getElementById("lbClose").addEventListener("click", closeLightbox);
+document.getElementById("lb").addEventListener("click", e => { if (e.target.id === "lb" || e.target.tagName === "FIGURE") closeLightbox(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbox(); });
+
 function renderProjects(lang){
   const list = document.getElementById("projects");
   list.innerHTML = "";
@@ -339,17 +389,20 @@ function renderProjects(lang){
     const name = (lang === "en" && p.name_en) ? p.name_en : p.name;
     const li = el("li", "project");
 
-    const thumb = p.url ? linkify(el("a","thumb"), p.url) : el("div","thumb");
-    if (p.url) thumb.setAttribute("aria-label", name);
+    const thumb = el("button","thumb"); thumb.type = "button";
+    thumb.setAttribute("aria-label", T[lang].zoom + ": " + name);
+    thumb.addEventListener("click", () => openLightbox(p, name, lang));
     const img = el("img"); img.src = "/goran/shot-" + p.img; img.alt = ""; img.loading = "lazy"; img.width = 960; img.height = 600;
-    thumb.append(img);
+    const z = el("span","zoom"); z.setAttribute("aria-hidden","true");
+    z.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/></svg>';
+    thumb.append(img, z);
 
     const body = el("div","project-body");
     const head = el("div","project-head");
     const h3 = el("h3");
     if (p.url) h3.append(linkify(el("a", null, name), p.url)); else h3.textContent = name;
     let st;
-    if (p.url) st = linkify(el("a","status", host(p.url)), p.url);
+    if (p.url) st = siteLink(p.url, "status");
     else st = el("span","status", p.prototype ? T[lang].prototype : p.internal ? T[lang].internal : p.noLink ? T[lang].video : T[lang].soon);
     head.append(h3, st);
 
