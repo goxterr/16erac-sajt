@@ -104,11 +104,10 @@ a.status{color:var(--lime);text-underline-offset:3px;text-decoration-color:rgba(
 
 .stack{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0;padding:0;list-style:none;font-weight:700;font-variation-settings:"wdth" 108;font-size:1.0625rem;color:#C9DCCF}
 
-.outro{margin-top:clamp(72px,10vh,120px);padding:32px;border-radius:22px;background:var(--lime);color:var(--bg-deep)}
-.outro p{margin:0 0 18px;font-weight:700;font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.25;max-width:26ch}
-.outro a{font-weight:800;font-variation-settings:"wdth" 112;font-size:clamp(1.05rem,2.2vw,1.5rem);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px;overflow-wrap:anywhere}
-.outro a:focus-visible{outline-color:var(--bg-deep)}
 footer{margin-top:40px;color:var(--muted);font-size:.875rem}
+
+.toast{position:fixed;left:50%;bottom:24px;z-index:30;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--lime);color:var(--bg-deep);font-weight:700;font-size:.9375rem;padding:12px 18px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:opacity .25s, transform .25s;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
 
 @media (max-width: 1180px){
   .project{grid-template-columns:1fr;gap:16px}
@@ -122,7 +121,6 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
 }
 @media (max-width: 480px){
   .job{grid-template-columns:1fr;padding:20px}
-  .outro{padding:24px}
 }
 @media (prefers-reduced-motion: reduce){*{transition:none !important}}
 </style>
@@ -145,7 +143,7 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
       <p class="role">Sales Professional | AI Product Builder &amp; Automation Specialist</p>
       <p class="place" data-i18n="place">Subotica, Srbija</p>
       <div class="links">
-        <a class="btn btn--main" href="mailto:bilic.goran7@gmail.com">
+        <a class="btn btn--main" id="mailBtn" href="mailto:bilic.goran7@gmail.com">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
           <span data-i18n="email">Pošalji mejl</span>
         </a>
@@ -192,19 +190,17 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
         <h2 id="stack-title" data-i18n="stackTitle">Alati s kojima radim</h2>
         <ul class="stack">
           <li>Claude</li><li>GitHub</li><li>Vercel</li><li>Google Apps Script</li><li>Google Sheets</li>
-          <li>Supabase</li><li>Next.js</li><li>GSAP</li><li>Playwright</li><li>ffmpeg</li><li>CapCut</li>
+          <li>Supabase</li><li>Next.js</li><li>GSAP</li><li>Canva</li><li>Playwright</li><li>ffmpeg</li><li>CapCut</li>
         </ul>
       </section>
 
-      <div class="outro">
-        <p data-i18n="outro">Imaš ideju za sajt ili alat koji bi ti uštedeo vreme? Piši mi.</p>
-        <a href="mailto:bilic.goran7@gmail.com">bilic.goran7@gmail.com</a>
-      </div>
 
       <footer>© <span id="year">2026</span> Goran Bilić</footer>
     </div>
   </main>
 </div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 /* ============================================================
@@ -223,11 +219,11 @@ const PROJECTS = [
   },
   {
     name: "Goranovi lešnici", url: "https://lesnici-sajt.vercel.app", img: "lesnici.webp",
-    sr: "Sajt na kome kolege naručuju pečene i sirove lešnike, sa admin panelom za mene.",
-    en: "A site where colleagues order roasted and raw hazelnuts, with an admin panel for me.",
-    f_sr: ["Izbor proizvoda i količine u par klikova", "Porudžbine se same upisuju u Google Sheet", "Automatska potvrda kupcu i obaveštenje meni mejlom", "Admin panel za praćenje uplata i preuzimanja"],
-    f_en: ["Pick products and quantities in a few clicks", "Orders are written to a Google Sheet automatically", "Automatic email confirmation to the buyer and a notification to me", "Admin panel to track payments and pickups"],
-    tags: ["Google Apps Script", "Google Sheets", "Vercel"]
+    sr: "Sajt na kome kolege naručuju pečene i sirove lešnike, sa animiranom pričom „Od leske do kese” i admin panelom za mene.",
+    en: "A site where colleagues order roasted and raw hazelnuts, with an animated story, “From orchard to bag”, and an admin panel for me.",
+    f_sr: ["Izbor proizvoda i količine u par klikova", "Porudžbine se same upisuju u Google Sheet", "Automatska potvrda kupcu i obaveštenje meni mejlom", "Admin panel za praćenje uplata i preuzimanja", "„Od leske do kese”: priča o lešniku koja se odvija dok skroluješ i vodi pravo na poručivanje"],
+    f_en: ["Pick products and quantities in a few clicks", "Orders are written to a Google Sheet automatically", "Automatic email confirmation to the buyer and a notification to me", "Admin panel to track payments and pickups", "“From orchard to bag”: a hazelnut's story that unfolds as you scroll and leads straight to ordering"],
+    tags: ["Google Apps Script", "Google Sheets", "GSAP", "Vercel"]
   },
   {
     name: "FC27 Liga", url: "https://inspira-fc27liga.vercel.app", img: "fc27.webp",
@@ -271,19 +267,11 @@ const PROJECTS = [
   },
   {
     name: "Mozgalice", url: "", img: "mozgalice.webp",
-    sr: "Igre za mozak u stilu LinkedIn zagonetki.",
-    en: "Brain games in the style of LinkedIn puzzles.",
-    f_sr: ["Spajalica i Blokovi, plus kraljice, tango, mini sudoku i nonogram", "Nivoi težine", "Tajmer i bodovanje prema vremenu"],
-    f_en: ["Spajalica and Blokovi, plus queens, tango, mini sudoku and nonogram", "Difficulty levels", "Timer and time-based scoring"],
+    sr: "Šest logičkih igara u stilu LinkedIn zagonetki, po 15 nivoa u svakoj.",
+    en: "Six logic games in the style of LinkedIn puzzles, with 15 levels each.",
+    f_sr: ["Spajalica, Blokovi, Kraljice, Sunce i Mesec, Sudoku i Slikovnica", "90 nivoa koji postaju sve teži", "Tajmer, bodovi i do tri zvezdice po nivou", "Pomoć kad zapneš, uz kaznu u bodovima"],
+    f_en: ["Spajalica, Blokovi, Queens, Sun and Moon, Sudoku and a picture puzzle", "90 levels that get harder as you go", "Timer, points and up to three stars per level", "Hints when you get stuck, at a points cost"],
     tags: ["JavaScript"]
-  },
-  {
-    name: "Od leske do kese", name_en: "From orchard to bag", url: "https://lesnici-sajt.vercel.app/prica", img: "prica.webp",
-    sr: "Animirani sajt koji skrolovanjem priča put lešnika od voćnjaka do kese.",
-    en: "An animated site that tells a hazelnut's journey from orchard to bag as you scroll.",
-    f_sr: ["Priča koja se odvija dok skroluješ", "Animacije vezane za skrol", "Na kraju vodi pravo na poručivanje"],
-    f_en: ["A story that unfolds as you scroll", "Scroll-driven animations", "Ends with a direct path to ordering"],
-    tags: ["JavaScript", "GSAP"]
   },
   {
     name: "Mundijal 2026 – kilometraža", name_en: "World Cup 2026 – travel distances", url: "https://16erac.com/mundijal", img: "mundijal.webp",
@@ -315,11 +303,11 @@ const T = {
     when: "Oktobar 2021 – danas",
     jobText: "Savetujem poslovne klijente kako da izvuku najviše iz oglašavanja na 4zida.rs, portalu za nekretnine u okviru Inspira grupe. Pored prodaje, za svoj tim pravim interne alate koji štede vreme, od raspodele poziva do automatskog popunjavanja ugovora.",
     stackTitle: "Alati s kojima radim",
-    outro: "Imaš ideju za sajt ili alat koji bi ti uštedeo vreme? Piši mi.",
     internal: "Interni alat, nije javan",
     prototype: "Interni prototip",
     soon: "Link uskoro",
-    video: "Video sadržaj"
+    video: "Video sadržaj",
+    copied: "Otvaram mejl. Adresa je i kopirana: bilic.goran7@gmail.com"
   },
   en: {
     place: "Subotica, Serbia",
@@ -332,11 +320,11 @@ const T = {
     when: "October 2021 – present",
     jobText: "I advise business clients on getting the most out of advertising on 4zida.rs, the real estate platform within Inspira Group. Alongside sales, I build internal tools that save my team time, from call distribution to automatic contract filling.",
     stackTitle: "Tools I work with",
-    outro: "Have an idea for a site or tool that would save you time? Write to me.",
     internal: "Internal tool, not public",
     prototype: "Internal prototype",
     soon: "Link coming soon",
-    video: "Video content"
+    video: "Video content",
+    copied: "Opening your email app. The address is also copied: bilic.goran7@gmail.com"
   }
 };
 
@@ -391,6 +379,20 @@ function setLang(lang){
   setLang(lang);
   document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
   document.getElementById("year").textContent = new Date().getFullYear();
+})();
+
+/* Dugme za mejl: otvara podrazumevani mejl program, a adresu kopira kao rezervu */
+(function mail(){
+  const btn = document.getElementById("mailBtn"), toast = document.getElementById("toast"), addr = "bilic.goran7@gmail.com";
+  let t;
+  btn.addEventListener("click", e => {
+    e.preventDefault();
+    try { navigator.clipboard && navigator.clipboard.writeText(addr); } catch(err){}
+    const lang = document.documentElement.lang === "en" ? "en" : "sr";
+    toast.textContent = T[lang].copied; toast.classList.add("on");
+    clearTimeout(t); t = setTimeout(() => toast.classList.remove("on"), 4000);
+    window.location.href = "mailto:" + addr;
+  });
 })();
 
 /* Aktivna pozadina: mreža tačaka koja se lagano talasa i zasvetli oko kursora */
