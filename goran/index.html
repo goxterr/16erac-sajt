@@ -112,14 +112,7 @@ body.lb-open{overflow:hidden}
 .project-links{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px;align-items:center}
 .status-text{font-size:.875rem;color:var(--muted)}
 .project .intro{margin:12px 0 4px;color:var(--text-2)}
-.details{position:relative;overflow:hidden;transition:max-height .45s ease}
-.details.collapsed{max-height:118px}
-.details.collapsed::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(to bottom, rgba(14,36,25,0), var(--bg) 92%);pointer-events:none}
-.more{display:inline-flex;align-items:center;gap:7px;margin:4px 0 14px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(21,54,42,.7);color:var(--text);font:600 .8125rem/1 var(--font);cursor:pointer;transition:border-color .2s, color .2s}
-.more:hover{border-color:var(--lime);color:var(--lime)}
-.more svg{width:14px;height:14px;transition:transform .25s;color:var(--lime)}
-.more[aria-expanded="true"] svg{transform:rotate(180deg)}
-.more[hidden]{display:none}
+
 .project h4{margin:16px 0 8px;font-size:.8125rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lime)}
 .project h3{margin:0;font-weight:800;font-variation-settings:"wdth" 110;font-size:clamp(1.25rem,1.8vw,1.55rem);line-height:1.15}
 .project h3 a{text-decoration:none}
@@ -282,18 +275,12 @@ const PROJECTS = [
       { f: "16erac-mundijal.webp", sr: "Kilometri Mundijala 2026", en: "World Cup 2026 travel distances" },
       { f: "16erac-giveaway.webp", sr: "Giveaway", en: "Giveaway" }
     ],
-    intro_sr: "Sajt mog fudbalskog kanala 16ERAC, napravljen od nule. Pored stranice sa mrežama kanala, ima interaktivne dashboarde koje koristim i u videima, kao i stranicu za nagradne igre.",
-    intro_en: "The website of my football channel 16ERAC, built from scratch. Besides a page with all the channel's socials, it has interactive dashboards that I also use in my videos, plus a giveaway page.",
+    intro_sr: "Sajt mog fudbalskog kanala, napravljen od nule, sa interaktivnim dashboardima koje koristim i u videima.",
+    intro_en: "My football channel's website, built from scratch, with interactive dashboards I also use in my videos.",
     groups: [
-      { sr: "Početna", en: "Home page",
-        f_sr: ["Sve mreže kanala na jednom mestu, uz kontakt za saradnju", "Izdvojene priče koje su eksplodirale na mrežama", "Sopstveni vizuelni identitet: žuta i tirkizna, saće u pozadini", "Lepi pregledi linkova kad se dele na Viberu, WhatsApp-u i mrežama"],
-        f_en: ["All channel socials in one place, with a contact for collaborations", "Featured stories that blew up on social media", "Its own visual identity: yellow and turquoise with a honeycomb background", "Rich link previews when shared on Viber, WhatsApp and social media"] },
-      { sr: "Kilometri Mundijala 2026", en: "World Cup 2026 travel distances",
-        f_sr: ["Koliko kilometara letovima prelazi svaka od 48 reprezentacija", "Prikaz za grupnu fazu i ukupno za ceo turnir, sa nokaut fazom", "Rang lista i pregled po grupama", "Animirana mapa letova za svaku ekipu", "Režim za snimanje videa, u kome se delovi otkrivaju jedan po jedan"],
-        f_en: ["How many kilometres each of the 48 national teams flies", "Group stage view and a full-tournament total including the knockouts", "Ranking and a view by group", "Animated flight map for every team", "A recording mode for videos that reveals sections one at a time"] },
-      { sr: "Giveaway", en: "Giveaway",
-        f_sr: ["Aktuelne i ranije nagradne igre na jednom mestu", "Prostor za sponzore igara", "Uvećan prikaz slika igara"],
-        f_en: ["Current and past giveaways in one place", "A section for giveaway sponsors", "Enlarged view of giveaway images"] }
+      { sr: "", en: "",
+        f_sr: ["Sve mreže kanala i kontakt za saradnju na jednom mestu", "Kilometri Mundijala: letovi svih 48 reprezentacija, rang lista i animirana mapa", "Giveaway stranica sa aktuelnim i ranijim nagradnim igrama", "Režim za snimanje videa, u kome se delovi otkrivaju jedan po jedan"],
+        f_en: ["All channel socials and a collaboration contact in one place", "World Cup distances: flights for all 48 teams, a ranking and an animated map", "Giveaway page with current and past contests", "A recording mode for videos that reveals sections one at a time"] }
     ],
     tags: ["HTML", "CSS", "JavaScript", "SVG", "Vercel"]
   },
@@ -310,18 +297,12 @@ const PROJECTS = [
       { f: "lesnici-tura-kesa.webp", sr: "Kraj ture: lešnici spremni u kesi", en: "End of the tour: hazelnuts ready in the bag" },
       { f: "lesnici-admin.webp", sr: "Admin panel", en: "Admin panel" }
     ],
-    intro_sr: "Sajt koji sam napravio da automatizujem prodaju lešnika kolegama. Umesto poruka i ručnog vođenja tabele, porudžbine, uplate i obaveštenja idu same, a sve vodim iz jednog admin panela.",
-    intro_en: "A site I built to automate selling hazelnuts to colleagues. Instead of messages and a hand-kept spreadsheet, orders, payments and notifications run on their own, and I manage everything from one admin panel.",
+    intro_sr: "Sajt koji automatizuje prodaju lešnika kolegama: od porudžbine i uplate do obaveštenja, sve ide samo.",
+    intro_en: "A site that automates selling hazelnuts to colleagues: from order and payment to notifications, it all runs on its own.",
     groups: [
-      { sr: "Za kupce", en: "For buyers",
-        f_sr: ["Poručivanje u par klikova, uz pamćenje podataka za sledeći put", "Posle porudžbine se generiše QR kod za uplatu sa popunjenim podacima i tačnim iznosom za tog kupca", "Potvrda porudžbine stiže mejlom", "Pregled svih porudžbina sa statusom plaćanja i preuzimanja", "Animirana kesa koja se puni lešnicima i lik majstora koji se pojavi kod većih porudžbina"],
-        f_en: ["Ordering in a few clicks, with details remembered for next time", "After ordering, a payment QR code is generated with the details filled in and the exact amount for that buyer", "Order confirmation by email", "A list of all orders with payment and pickup status", "An animated bag that fills with hazelnuts and a worker character who shows up for bigger orders"] },
-      { sr: "Admin panel", en: "Admin panel",
-        f_sr: ["Pregled na jednom mestu: koliko je za naplatu, koliko kilograma za spremanje i ukupan promet", "Obeležavanje načina plaćanja (e-račun ili gotovina) i preuzimanja", "Automatski mejlovi kupcima o porudžbini i dolasku lešnika, jednim klikom za sve", "Prepiska sa kupcem povezana sa mejlom, pa odgovori kupaca stižu pravo u admin", "Korekcija cene i iznosa porudžbine, uz preračun po trenutnim cenama", "Dodavanje i uređivanje proizvoda i njihove dostupnosti", "Zaštita lozinkom i podešavanje animacije majstora"],
-        f_en: ["One overview: amount to collect, kilos to prepare and total sales", "Marking the payment method (bank transfer or cash) and pickup", "Automatic emails to buyers about their order and the hazelnuts' arrival, sent to everyone in one click", "Email-linked conversations, so buyers' replies land right in the admin", "Correcting prices and order totals, with a recalculation at current prices", "Adding and editing products and their availability", "Password protection and settings for the worker animation"] },
-      { sr: "Virtuelna tura kroz voćnjak", en: "Virtual orchard tour",
-        f_sr: ["Priča „Od leske do kese” koja prati lešnik od voćnjaka do kese dok skroluješ", "Animacije vezane za skrol", "Na kraju vodi pravo na poručivanje"],
-        f_en: ["The story “From orchard to bag” follows a hazelnut from the orchard to the bag as you scroll", "Scroll-driven animations", "Ends with a direct path to ordering"] }
+      { sr: "", en: "",
+        f_sr: ["QR kod za uplatu sa podacima i tačnim iznosom za svakog kupca", "Admin panel: način plaćanja, preuzimanje, korekcija cene i proizvodi", "Automatski mejlovi i prepiska sa kupcem povezana sa mejlom", "Virtuelna tura kroz voćnjak „Od leske do kese”"],
+        f_en: ["Payment QR code with the details and exact amount for each buyer", "Admin panel: payment method, pickup, price corrections and products", "Automatic emails and email-linked conversations with buyers", "Virtual orchard tour, “From orchard to bag”"] }
     ],
     tags: ["Google Apps Script", "Google Sheets", "Gmail", "GSAP", "Vercel"]
   },
@@ -332,15 +313,12 @@ const PROJECTS = [
       { f: "fc27.webp", sr: "Javni sajt lige", en: "Public league site" },
       { f: "fc27-admin.webp", sr: "Admin panel", en: "Admin panel" }
     ],
-    intro_sr: "Sajt internog EA FC 27 turnira za oko 20 kolega iz Inspira grupe, sa javnim delom za igrače i admin panelom za vođenje cele lige.",
-    intro_en: "The site for an internal EA FC 27 tournament for about 20 colleagues at Inspira Group, with a public side for players and an admin panel that runs the whole league.",
+    intro_sr: "Sajt internog EA FC 27 turnira za oko 20 kolega iz Inspira grupe.",
+    intro_en: "The site for an internal EA FC 27 tournament for about 20 colleagues at Inspira Group.",
     groups: [
-      { sr: "Javni sajt", en: "Public site",
-        f_sr: ["Tabela lige, raspored po kolima i poslednji rezultati", "Plej-of za 12 igrača", "Strelci, timovi, pravila i obaveštenja", "Slike igrača i oznake plasmana iz prošle sezone"],
-        f_en: ["League table, fixtures by round and latest results", "12-player playoff", "Top scorers, teams, rules and announcements", "Player photos and markers for last season's placings"] },
-      { sr: "Admin panel", en: "Admin panel",
-        f_sr: ["Dodavanje igrača pojedinačno ili zbirno, sa ocenom tima", "Raspored lige u dva kruga generiše se jednim klikom", "Unos rezultata koji se odmah vide na sajtu", "Vođenje plej-ofa, pravila i obaveštenja"],
-        f_en: ["Adding players one by one or in bulk, with a team rating", "A double round-robin schedule generated in one click", "Results entry that shows on the site instantly", "Managing the playoff, rules and announcements"] }
+      { sr: "", en: "",
+        f_sr: ["Tabela, raspored po kolima, strelci i plej-of za 12 igrača", "Admin panel: igrači, raspored jednim klikom i unos rezultata", "Rezultati se na sajtu vide odmah"],
+        f_en: ["League table, fixtures, top scorers and a 12-player playoff", "Admin panel: players, one-click schedule and results entry", "Results appear on the site instantly"] }
     ],
     tags: ["Supabase", "JavaScript", "Vercel"]
   },
@@ -348,48 +326,48 @@ const PROJECTS = [
     name: "nagradneigre.org",
     links: [{ url: "https://nagradneigre.org" }],
     imgs: [{ f: "nagradneigre.webp", sr: "Početna strana", en: "Home page" }],
-    intro_sr: "Agregator nagradnih igara u Srbiji: sve igre velikih kompanija i lokalnih akcija na jednom mestu.",
-    intro_en: "A giveaway aggregator for Serbia: contests from big brands and local campaigns, all in one place.",
+    intro_sr: "Agregator nagradnih igara u Srbiji.",
+    intro_en: "A giveaway aggregator for Serbia.",
     groups: [
       { sr: "", en: "",
-        f_sr: ["Sve nagradne igre u Srbiji na jednom mestu, bez registracije", "Pretraga i filteri za aktivne i završene igre", "Kalendar igara i prikaz u karticama ili listi", "Organizatori mogu sami da prijave igru", "Admin panel i sistem banera za istaknute igre"],
-        f_en: ["Every giveaway in Serbia in one place, no sign-up needed", "Search and filters for active and finished contests", "Contest calendar, with card or list view", "Organizers can submit a contest themselves", "Admin panel and a banner system for featured contests"] }
+        f_sr: ["Sve igre na jednom mestu, bez registracije", "Pretraga, filteri i kalendar igara", "Organizatori sami prijavljuju igre", "Admin panel i baneri za istaknute igre"],
+        f_en: ["Every contest in one place, no sign-up needed", "Search, filters and a contest calendar", "Organizers submit contests themselves", "Admin panel and banners for featured contests"] }
     ],
     tags: ["Next.js", "Google Sheets", "Vercel"]
   },
   {
     name: "Generator ugovora", name_en: "Contract generator", status: "internal",
     imgs: [{ f: "ugovori.webp", sr: "Generator ugovora", en: "Contract generator" }],
-    intro_sr: "Alat koji ugovor o oglašavanju za klijenta 4zida.rs popunjava za par sekundi, umesto ručnog prepisivanja podataka.",
-    intro_en: "A tool that fills in a 4zida.rs advertising contract in seconds, instead of copying details by hand.",
+    intro_sr: "Ugovor o oglašavanju za klijenta 4zida.rs, popunjen za par sekundi.",
+    intro_en: "A 4zida.rs advertising contract, filled in within seconds.",
     groups: [
       { sr: "", en: "",
-        f_sr: ["Pretraga firme po PIB-u ili matičnom broju, uz brze linkove na NBS, APR i CompanyWall", "Usluge se popunjavaju iz PDF ponude ili ručno", "Tri tipa ugovora: mesec za mesec, avans 6 i avans 12 meseci", "Obračun cene sa popustima i PDV-om", "Pregled ugovora preuzetih u poslednjih 7 dana"],
-        f_en: ["Company lookup by tax or registration number, with quick links to official registries", "Services filled in from a PDF offer or entered by hand", "Three contract types: month-to-month, 6-month and 12-month prepaid", "Price calculation with discounts and VAT", "List of contracts downloaded in the last 7 days"] }
+        f_sr: ["Pretraga firme po PIB-u ili matičnom broju", "Usluge iz PDF ponude ili ručno, sa obračunom cene i PDV-a", "Tri tipa ugovora: mesec za mesec, avans 6 i avans 12 meseci"],
+        f_en: ["Company lookup by tax or registration number", "Services from a PDF offer or entered by hand, with price and VAT calculation", "Three contract types: month-to-month, 6-month and 12-month prepaid"] }
     ],
     tags: ["Vercel", "API"]
   },
   {
     name: "Raspodela poziva", name_en: "Call distribution", status: "internal",
     imgs: [{ f: "raspodela.webp", sr: "Raspodela poziva", en: "Call distribution" }],
-    intro_sr: "Interni dashboard koji svako jutro ravnomerno raspoređuje pozive prodajnom timu, umesto ručnog deljenja lista.",
-    intro_en: "An internal dashboard that splits the day's calls evenly across the sales team every morning, instead of dividing lists by hand.",
+    intro_sr: "Dashboard koji svako jutro ravnomerno deli pozive prodajnom timu.",
+    intro_en: "A dashboard that splits the day's calls evenly across the sales team every morning.",
     groups: [
       { sr: "", en: "",
-        f_sr: ["Raspodela po gradovima i savetnicima, uz uključivanje i isključivanje članova tima", "Sekundarne liste (draft, bez zahteva, napravljeni zahtevi) koje se dele svima", "Nivelacija, da niko ne zove mnogo više od ostalih", "Istorijat po danima i grafikon trenda, od 7 dana do godinu dana", "Zajednička baza preko Google Sheets-a, uživo za ceo tim", "Zaštita lozinkom i prikaz prilagođen telefonu"],
-        f_en: ["Distribution by city and by advisor, with team members toggled on or off", "Secondary lists (drafts, no request, requests made) shared across everyone", "Leveling, so nobody calls far more than the rest", "Daily history and a trend chart, from 7 days to a full year", "Shared data through Google Sheets, live for the whole team", "Password protection and a phone-friendly layout"] }
+        f_sr: ["Raspodela po gradovima i savetnicima, uz nivelaciju", "Istorijat po danima i grafikon trenda", "Zajednička baza preko Google Sheets-a, uživo za ceo tim"],
+        f_en: ["Distribution by city and advisor, with leveling", "Daily history and a trend chart", "Shared data through Google Sheets, live for the whole team"] }
     ],
     tags: ["Google Apps Script", "Google Sheets", "Vercel"]
   },
   {
     name: "Podela oglasa", name_en: "Ad call lists", status: "prototype",
     imgs: [{ f: "admin.webp", sr: "Admin za podelu oglasa", en: "Ad call list admin" }],
-    intro_sr: "Unapređenje 4zida admina: liste za pozivanje se same slažu, a uplaćeni i raniji kupci nestaju sa njih.",
-    intro_en: "An upgrade to the 4zida admin: call lists build themselves, and paid or returning customers drop off.",
+    intro_sr: "Unapređenje 4zida admina: liste za pozivanje se same slažu.",
+    intro_en: "An upgrade to the 4zida admin: call lists build themselves.",
     groups: [
       { sr: "", en: "",
-        f_sr: ["Odvojene sekcije: baza po gradovima, draft, bez zahteva i napravljeni zahtevi", "Oglasi grupisani po datumu isteka", "Automatski uklanja uplaćene i ranije kupce", "Grupni unos datuma poziva i dodela savetnika"],
-        f_en: ["Separate sections: database by city, drafts, no request and requests made", "Listings grouped by expiry date", "Automatically removes paid and returning customers", "Bulk call dates and advisor assignment"] }
+        f_sr: ["Sekcije: baza po gradovima, draft, bez zahteva i napravljeni zahtevi", "Automatski uklanja uplaćene i ranije kupce", "Grupni unos datuma poziva i dodela savetnika"],
+        f_en: ["Sections: database by city, drafts, no request and requests made", "Automatically removes paid and returning customers", "Bulk call dates and advisor assignment"] }
     ],
     tags: ["HTML", "Google Sheets"]
   },
@@ -400,12 +378,12 @@ const PROJECTS = [
       { f: "mozgalice-spajalica.webp", sr: "Spajalica", en: "Spajalica" },
       { f: "mozgalice-kraljice.webp", sr: "Kraljice", en: "Queens" }
     ],
-    intro_sr: "Šest logičkih igara u stilu LinkedIn zagonetki, po 15 nivoa u svakoj. Napravljeno iz zabave.",
-    intro_en: "Six logic games in the style of LinkedIn puzzles, with 15 levels each. Built just for fun.",
+    intro_sr: "Šest logičkih igara u stilu LinkedIn zagonetki, napravljeno iz zabave.",
+    intro_en: "Six logic games in the style of LinkedIn puzzles, built just for fun.",
     groups: [
       { sr: "", en: "",
-        f_sr: ["Spajalica, Blokovi, Kraljice, Sunce i Mesec, Sudoku i Slikovnica", "90 nivoa koji postaju sve teži", "Tajmer, bodovi i do tri zvezdice po nivou", "Pomoć kad zapneš, uz kaznu u bodovima"],
-        f_en: ["Spajalica, Blokovi, Queens, Sun and Moon, Sudoku and a picture puzzle", "90 levels that get harder as you go", "Timer, points and up to three stars per level", "Hints when you get stuck, at a points cost"] }
+        f_sr: ["Spajalica, Blokovi, Kraljice, Sunce i Mesec, Sudoku i Slikovnica", "90 nivoa, tajmer, bodovi i zvezdice", "Pomoć kad zapneš, uz kaznu u bodovima"],
+        f_en: ["Spajalica, Blokovi, Queens, Sun and Moon, Sudoku and a picture puzzle", "90 levels, a timer, points and stars", "Hints when you get stuck, at a points cost"] }
     ],
     tags: ["JavaScript"]
   },
@@ -416,8 +394,8 @@ const PROJECTS = [
     intro_en: "Social media animations I create with code and render to video.",
     groups: [
       { sr: "", en: "",
-        f_sr: ["Vertikalni format za Reels, TikTok i Shorts", "Poređenja, mape, karijere igrača i taktičke table", "Renderovanje kadar po kadar u MP4"],
-        f_en: ["Vertical format for Reels, TikTok and Shorts", "Comparisons, maps, player careers and tactics boards", "Frame-by-frame rendering to MP4"] }
+        f_sr: ["Vertikalni format za Reels, TikTok i Shorts", "Poređenja, mape, karijere igrača i taktičke table"],
+        f_en: ["Vertical format for Reels, TikTok and Shorts", "Comparisons, maps, player careers and tactics boards"] }
     ],
     tags: ["Playwright", "ffmpeg", "CapCut"]
   }
@@ -442,8 +420,6 @@ const T = {
     video: "Video sadržaj",
     zoom: "Uvećaj sliku",
     images: "slike",
-    more: "Prikaži sve detalje",
-    less: "Sakrij detalje",
     prev: "Prethodna slika",
     next: "Sledeća slika",
     close: "Zatvori",
@@ -467,8 +443,6 @@ const T = {
     video: "Video content",
     zoom: "Enlarge image",
     images: "images",
-    more: "Show all details",
-    less: "Hide details",
     prev: "Previous image",
     next: "Next image",
     close: "Close",
@@ -573,29 +547,13 @@ function renderProjects(lang){
     if (p.status) links.append(el("span","status-text", T[lang][p.status]));
     body.append(links);
     body.append(el("p","intro", lang === "en" ? p.intro_en : p.intro_sr));
-    const det = el("div","details collapsed");
     p.groups.forEach(g => {
       const title = lang === "en" ? g.en : g.sr;
-      if (title) det.append(el("h4", null, title));
+      if (title) body.append(el("h4", null, title));
       const ul = el("ul","features");
       (lang === "en" ? g.f_en : g.f_sr).forEach(t => ul.append(el("li", null, t)));
-      det.append(ul);
+      body.append(ul);
     });
-    const more = el("button","more"); more.type = "button"; more.setAttribute("aria-expanded","false");
-    const lbl = el("span", null, T[lang].more);
-    more.append(lbl); more.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>');
-    more.addEventListener("click", () => {
-      const open = more.getAttribute("aria-expanded") === "true";
-      if (open){
-        det.style.maxHeight = det.scrollHeight + "px";
-        requestAnimationFrame(() => { det.classList.add("collapsed"); det.style.maxHeight = ""; });
-        more.setAttribute("aria-expanded","false"); lbl.textContent = T[lang].more;
-      } else {
-        det.style.maxHeight = det.scrollHeight + "px"; det.classList.remove("collapsed"); setTimeout(() => { if (more.getAttribute("aria-expanded") === "true") det.style.maxHeight = "none"; }, 500);
-        more.setAttribute("aria-expanded","true"); lbl.textContent = T[lang].less;
-      }
-    });
-    body.append(det, more);
     const tags = el("ul","tags");
     p.tags.forEach(t => tags.append(el("li", null, t)));
     body.append(tags);
@@ -603,21 +561,9 @@ function renderProjects(lang){
     li.append(media, body);
     list.append(li);
   });
-  fitDetails();
 }
 
-/* Dugme „Prikaži sve” samo tamo gde detalji ne staju u skraćeni prikaz */
-function fitDetails(){
-  document.querySelectorAll(".project").forEach(li => {
-    const det = li.querySelector(".details"), more = li.querySelector(".more");
-    if (!det || more.getAttribute("aria-expanded") === "true") return;
-    const fits = det.scrollHeight <= 128;
-    det.classList.toggle("collapsed", !fits);
-    more.hidden = fits;
-  });
-}
-window.addEventListener("resize", () => { clearTimeout(window.__fit); window.__fit = setTimeout(fitDetails, 150); });
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitDetails);
+
 
 function setLang(lang){
   document.documentElement.lang = lang;
