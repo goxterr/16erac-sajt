@@ -30,179 +30,93 @@
   --lime:#C8F03C;
   --lime-soft:rgba(200,240,60,.14);
   --text:#E9F3EC;
+  --text-2:#D3E3D8;
   --muted:#93B19F;
   --line:rgba(233,243,236,.12);
   --font:"Archivo", "Helvetica Neue", Arial, system-ui, sans-serif;
-  --left:44vw;
+  --left:42vw;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font);
-  font-size:1.0625rem;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit}
 img{max-width:100%;display:block}
 :focus-visible{outline:2px solid var(--lime);outline-offset:3px;border-radius:4px}
 
-/* Aktivna pozadina */
 #field{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 
-/* Prekidač jezika */
-.lang{
-  position:fixed;top:18px;right:20px;z-index:20;
-  display:flex;gap:2px;padding:3px;
-  background:rgba(10,28,19,.72);
-  border:1px solid var(--line);border-radius:999px;
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-}
-.lang button{
-  font:600 .8125rem/1 var(--font);
-  color:var(--muted);background:none;border:0;cursor:pointer;
-  padding:8px 12px;border-radius:999px;
-}
+.lang{position:fixed;top:18px;right:20px;z-index:20;display:flex;gap:2px;padding:3px;background:rgba(10,28,19,.72);border:1px solid var(--line);border-radius:999px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.lang button{font:600 .8125rem/1 var(--font);color:var(--muted);background:none;border:0;cursor:pointer;padding:8px 12px;border-radius:999px}
 .lang button[aria-pressed="true"]{background:var(--lime);color:var(--bg-deep)}
 
-/* Raspored */
 .page{position:relative;z-index:1;display:grid;grid-template-columns:var(--left) 1fr}
 
-/* Leva strana: ime i slika */
-.portrait{
-  position:sticky;top:0;height:100vh;height:100svh;
-  overflow:hidden;
-  background:radial-gradient(ellipse 70% 55% at 50% 72%, rgba(200,240,60,.13), transparent 70%);
-  border-right:1px solid var(--line);
-}
-.portrait{--top:9vh;--fs:clamp(3rem, 9.4vw, 10rem)}
-.name{
-  position:absolute;left:0;right:0;top:var(--top);
-  margin:0;text-align:center;
-  font-weight:900;
-  font-variation-settings:"wdth" 125;
-  font-size:var(--fs);
-  line-height:.95;letter-spacing:-.01em;
-  text-transform:uppercase;
-  user-select:none;
-}
+/* Leva strana */
+.portrait{--top:8vh;--fs:clamp(3rem, 8.9vw, 10rem);position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:radial-gradient(ellipse 70% 55% at 50% 66%, rgba(200,240,60,.13), transparent 70%);border-right:1px solid var(--line)}
+.name{position:absolute;left:0;right:0;top:var(--top);margin:0;text-align:center;font-weight:900;font-variation-settings:"wdth" 125;font-size:var(--fs);line-height:.95;letter-spacing:-.01em;text-transform:uppercase;color:var(--lime);user-select:none}
 .name span{display:block}
-.name--fill{color:var(--lime);z-index:1}
-.photo{
-  position:absolute;left:50%;bottom:0;z-index:2;
-  /* glava počinje tik ispod imena, malo ga preklapa */
-  height:calc(100% - var(--top) - var(--fs) * 1.62);width:auto;max-width:none;
-  transform:translateX(-50%);
-  -webkit-mask-image:linear-gradient(to bottom, #000 72%, transparent 100%);
-          mask-image:linear-gradient(to bottom, #000 72%, transparent 100%);
-}
-.caption{
-  position:absolute;left:0;right:0;bottom:0;z-index:4;
-  padding:28px clamp(20px,3vw,40px) 32px;
-  background:linear-gradient(to top, rgba(10,28,19,.95) 30%, transparent);
-}
-.role{margin:0;font-weight:600;font-size:clamp(.95rem,1.15vw,1.125rem);line-height:1.35;max-width:32ch}
-.place{margin:6px 0 0;color:var(--muted);font-size:.9375rem}
-
-/* Desna strana: sadržaj */
-.content{padding:clamp(88px,12vh,140px) clamp(24px,6vw,96px) 72px}
-.inner{max-width:640px}
-.lead{
-  margin:0 0 28px;
-  font-weight:800;font-variation-settings:"wdth" 112;
-  font-size:clamp(2rem,3.6vw,3.25rem);line-height:1.05;letter-spacing:-.015em;
-  text-wrap:balance;
-}
-.bio p{margin:0 0 1em;max-width:62ch;color:#D3E3D8}
-.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.btn{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:12px 18px;border-radius:999px;
-  font-weight:600;font-size:.9375rem;text-decoration:none;
-  border:1px solid var(--line);background:rgba(21,54,42,.55);
-  transition:border-color .2s, background .2s;
-}
-.btn svg{width:17px;height:17px;flex:none}
+.photo{position:absolute;left:50%;bottom:0;z-index:2;height:calc(100% - var(--top) - var(--fs) * 1.62);width:auto;max-width:none;transform:translateX(-50%);-webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent 92%);mask-image:linear-gradient(to bottom,#000 62%,transparent 92%)}
+.caption{position:absolute;left:0;right:0;bottom:0;z-index:4;padding:56px clamp(20px,3vw,40px) 30px;background:linear-gradient(to top, rgba(10,28,19,.97) 55%, transparent)}
+.role{margin:0;font-weight:600;font-size:clamp(.95rem,1.1vw,1.0625rem);line-height:1.35;max-width:34ch}
+.place{margin:4px 0 16px;color:var(--muted);font-size:.9375rem}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 15px;border-radius:999px;font-weight:600;font-size:.875rem;line-height:1;text-decoration:none;border:1px solid var(--line);background:rgba(21,54,42,.7);transition:border-color .2s, background .2s}
+.btn svg{width:16px;height:16px;flex:none}
 .btn:hover{border-color:var(--lime);background:var(--lime-soft)}
 .btn--main{background:var(--lime);color:var(--bg-deep);border-color:var(--lime)}
 .btn--main:hover{background:#D6F76A}
 
-section{margin-top:clamp(72px,10vh,112px)}
-h2{
-  margin:0 0 24px;
-  font-weight:800;font-variation-settings:"wdth" 118;
-  font-size:1.5rem;line-height:1.15;letter-spacing:-.005em;
-}
-.section-note{margin:-12px 0 24px;color:var(--muted);max-width:56ch}
+/* Desna strana */
+.content{padding:clamp(88px,12vh,140px) clamp(24px,5vw,80px) 72px}
+.inner{max-width:760px}
+.lead{margin:0 0 28px;font-weight:800;font-variation-settings:"wdth" 112;font-size:clamp(2rem,3.4vw,3.25rem);line-height:1.05;letter-spacing:-.015em;text-wrap:balance}
+.bio p{margin:0 0 1em;max-width:62ch;color:var(--text-2)}
 
-/* Iskustvo */
-.job{
-  display:grid;grid-template-columns:auto 1fr;gap:18px;
-  padding:24px;border-radius:18px;
-  background:rgba(21,54,42,.6);border:1px solid var(--line);
-}
-.job-mark{
-  width:48px;height:48px;border-radius:12px;
-  display:grid;place-items:center;
-  background:var(--lime);color:var(--bg-deep);
-  font-weight:900;font-variation-settings:"wdth" 125;font-size:1.05rem;
-}
-.job h3{margin:0;font-size:1.1875rem;font-weight:700;line-height:1.3}
-.job .org{margin:2px 0 0;color:var(--text)}
-.job .when{margin:2px 0 12px;color:var(--muted);font-size:.9375rem}
-.job p:last-child{margin:0;color:#D3E3D8}
+section{margin-top:clamp(64px,9vh,104px)}
+h2{margin:0 0 24px;font-weight:800;font-variation-settings:"wdth" 118;font-size:1.75rem;line-height:1.15;letter-spacing:-.005em}
 
 /* Projekti */
 .projects{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.project{border-bottom:1px solid var(--line)}
-.project > a, .project > div{
-  display:block;text-decoration:none;
-  padding:22px 4px 22px 0;
-}
-.project-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
-.project h3{
-  margin:0;
-  font-weight:800;font-variation-settings:"wdth" 110;
-  font-size:clamp(1.25rem,1.9vw,1.6rem);line-height:1.15;
-  transition:color .2s;
-}
+.project{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:28px;align-items:start;padding:28px 0;border-bottom:1px solid var(--line)}
+.thumb{display:block;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--surface);aspect-ratio:16/10;transition:border-color .2s}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:top center}
+a.thumb:hover{border-color:var(--lime)}
+.project-head{display:flex;justify-content:space-between;align-items:baseline;gap:6px 16px;flex-wrap:wrap}
+.project h3{margin:0;font-weight:800;font-variation-settings:"wdth" 110;font-size:clamp(1.25rem,1.8vw,1.55rem);line-height:1.15}
+.project h3 a{text-decoration:none}
+.project h3 a:hover{color:var(--lime)}
 .status{font-size:.875rem;color:var(--muted);white-space:nowrap}
-.project a .status{color:var(--lime);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(200,240,60,.4)}
-.project a:hover h3{color:var(--lime)}
-.project p{margin:8px 0 10px;color:#D3E3D8;max-width:58ch}
+a.status{color:var(--lime);text-underline-offset:3px;text-decoration-color:rgba(200,240,60,.4)}
+.project p{margin:8px 0 12px;color:var(--text-2)}
+.features{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:5px;font-size:.9375rem;color:var(--text-2)}
+.features li{position:relative;padding-left:18px;line-height:1.45}
+.features li::before{content:"";position:absolute;left:2px;top:.55em;width:7px;height:7px;border-radius:2px;background:var(--lime)}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
-.tags li{
-  font-size:.78rem;font-weight:600;color:var(--muted);
-  padding:3px 10px;border-radius:999px;border:1px solid var(--line);
-}
+.tags li{font-size:.78rem;font-weight:600;color:var(--muted);padding:3px 10px;border-radius:999px;border:1px solid var(--line)}
 
-/* Alati */
-.stack{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0;padding:0;list-style:none;
-  font-weight:700;font-variation-settings:"wdth" 108;font-size:1.0625rem;color:#C9DCCF}
+/* Iskustvo */
+.job{display:grid;grid-template-columns:auto 1fr;gap:20px;padding:24px;border-radius:18px;background:rgba(21,54,42,.6);border:1px solid var(--line)}
+.job-logo{width:64px;height:64px;border-radius:14px;overflow:hidden;background:#fff}
+.job h3{margin:0;font-size:1.1875rem;font-weight:700;line-height:1.3}
+.job .org{margin:2px 0 0}
+.job .when{margin:2px 0 12px;color:var(--muted);font-size:.9375rem}
+.job p:last-child{margin:0;color:var(--text-2)}
 
-/* Kraj */
-.outro{
-  margin-top:clamp(80px,12vh,128px);padding:32px;border-radius:22px;
-  background:var(--lime);color:var(--bg-deep);
-}
+.stack{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0;padding:0;list-style:none;font-weight:700;font-variation-settings:"wdth" 108;font-size:1.0625rem;color:#C9DCCF}
+
+.outro{margin-top:clamp(72px,10vh,120px);padding:32px;border-radius:22px;background:var(--lime);color:var(--bg-deep)}
 .outro p{margin:0 0 18px;font-weight:700;font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.25;max-width:26ch}
-.outro a{
-  font-weight:800;font-variation-settings:"wdth" 112;
-  font-size:clamp(1.05rem,2.2vw,1.5rem);
-  text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px;
-  overflow-wrap:anywhere;
-}
+.outro a{font-weight:800;font-variation-settings:"wdth" 112;font-size:clamp(1.05rem,2.2vw,1.5rem);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:2px;overflow-wrap:anywhere}
 .outro a:focus-visible{outline-color:var(--bg-deep)}
 footer{margin-top:40px;color:var(--muted);font-size:.875rem}
 
-/* Telefon i tablet */
+@media (max-width: 1180px){
+  .project{grid-template-columns:1fr;gap:16px}
+  .thumb{max-width:520px}
+}
 @media (max-width: 900px){
   .page{grid-template-columns:1fr}
-  .portrait{position:relative;height:min(92svh, 820px);min-height:560px;border-right:0;border-bottom:1px solid var(--line)}
-  .portrait{--top:72px;--fs:clamp(3.4rem, 21vw, 9rem)}
+  .portrait{--top:72px;--fs:clamp(3.4rem, 21vw, 9rem);position:relative;height:min(94svh, 860px);min-height:600px;border-right:0;border-bottom:1px solid var(--line)}
   .content{padding-top:56px}
   .lang{top:14px;right:14px}
 }
@@ -210,9 +124,7 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
   .job{grid-template-columns:1fr;padding:20px}
   .outro{padding:24px}
 }
-@media (prefers-reduced-motion: reduce){
-  *{transition:none !important}
-}
+@media (prefers-reduced-motion: reduce){*{transition:none !important}}
 </style>
 </head>
 <body>
@@ -227,23 +139,11 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
 <div class="page">
 
   <header class="portrait">
-    <h1 class="name name--fill"><span>Goran</span><span>Bilić</span></h1>
+    <h1 class="name"><span>Goran</span><span>Bilić</span></h1>
     <img class="photo" src="/goran/goran.webp" alt="Goran Bilić" width="691" height="1154">
     <div class="caption">
       <p class="role">Sales Professional | AI Product Builder &amp; Automation Specialist</p>
       <p class="place" data-i18n="place">Subotica, Srbija</p>
-    </div>
-  </header>
-
-  <main class="content">
-    <div class="inner">
-
-      <p class="lead" data-i18n="lead">Prodavac koji sam pravi alate koji mu trebaju.</p>
-      <div class="bio">
-        <p data-i18n="bio1">Ceo radni vek sam u prodaji i brizi o korisnicima. Tu sam naučio da slušam ljude i rešavam njihove stvarne probleme. Isti pristup sam preneo na tehnologiju: uz pomoć AI alata samostalno sam naučio da dizajniram i pravim digitalne proizvode, automatizujem procese i gradim rešenja za svakodnevne potrebe koja štede vreme i podižu efikasnost.</p>
-        <p data-i18n="bio2">Pored toga sam digitalni kreator: snimam i montiram sadržaj za društvene mreže.</p>
-      </div>
-
       <div class="links">
         <a class="btn btn--main" href="mailto:bilic.goran7@gmail.com">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
@@ -258,11 +158,27 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
           Instagram
         </a>
       </div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="inner">
+
+      <p class="lead" data-i18n="lead">Prodavac koji sam pravi alate koji mu trebaju.</p>
+      <div class="bio">
+        <p data-i18n="bio1">Ceo radni vek sam u prodaji i brizi o korisnicima. Tu sam naučio da slušam ljude i rešavam njihove stvarne probleme. Isti pristup sam preneo na tehnologiju: uz pomoć AI alata samostalno sam naučio da dizajniram i pravim digitalne proizvode, automatizujem procese i gradim rešenja za svakodnevne potrebe koja štede vreme i podižu efikasnost.</p>
+        <p data-i18n="bio2">Pored toga sam digitalni kreator: snimam i montiram sadržaj za društvene mreže.</p>
+      </div>
+
+      <section aria-labelledby="proj-title">
+        <h2 id="proj-title" data-i18n="projTitle">Moji projekti</h2>
+        <ul class="projects" id="projects"></ul>
+      </section>
 
       <section aria-labelledby="exp-title">
         <h2 id="exp-title" data-i18n="expTitle">Iskustvo</h2>
         <article class="job">
-          <div class="job-mark" aria-hidden="true">4z</div>
+          <img class="job-logo" src="/goran/4zida-logo.webp" alt="4zida.rs" width="64" height="64">
           <div>
             <h3>Sales Advisor</h3>
             <p class="org">Inspira Grupa (4zida.rs)</p>
@@ -272,17 +188,11 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
         </article>
       </section>
 
-      <section aria-labelledby="proj-title">
-        <h2 id="proj-title" data-i18n="projTitle">Projekti</h2>
-        <p class="section-note" data-i18n="projNote">Svaki od ovih projekata napravio sam uz AI, od prve ideje do sajta koji radi.</p>
-        <ul class="projects" id="projects"></ul>
-      </section>
-
       <section aria-labelledby="stack-title">
         <h2 id="stack-title" data-i18n="stackTitle">Alati s kojima radim</h2>
         <ul class="stack">
           <li>Claude</li><li>GitHub</li><li>Vercel</li><li>Google Apps Script</li><li>Google Sheets</li>
-          <li>Supabase</li><li>Next.js</li><li>Playwright</li><li>ffmpeg</li><li>CapCut</li>
+          <li>Supabase</li><li>Next.js</li><li>GSAP</li><li>Playwright</li><li>ffmpeg</li><li>CapCut</li>
         </ul>
       </section>
 
@@ -298,84 +208,97 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
 
 <script>
 /* ============================================================
-   PROJEKTI – ovde menjaš redosled, tekst i linkove.
-   url: "" znači "Link uskoro"; internal: true znači "Interni alat".
+   PROJEKTI – ovde menjaš redosled, tekst, funkcionalnosti i linkove.
+   img: slika u folderu goran, sa imenom shot-...
+   url: "" znači "Link uskoro"; internal: true znači "Interni alat"
    ============================================================ */
 const PROJECTS = [
   {
-    name: "16ERAC",
-    url: "https://16erac.com",
-    sr: "Sajt mog fudbalskog kanala: sve mreže na jednom mestu, stranica za nagradne igre i interaktivni dashboardi.",
-    en: "Website for my football channel: all socials in one place, a giveaway page and interactive dashboards.",
+    name: "16ERAC", url: "https://16erac.com", img: "16erac.webp",
+    sr: "Sajt mog fudbalskog kanala sa pričama o fudbalu koje niste čuli.",
+    en: "Website for my football channel, home of the football stories you haven't heard.",
+    f_sr: ["Sve mreže kanala na jednom mestu", "Stranica za nagradne igre sa aktivnim i završenim igrama", "Interaktivni dashboardi, poput Mundijala 2026", "Lepi pregledi linkova kad se dele na mrežama"],
+    f_en: ["All channel socials in one place", "Giveaway page with active and past contests", "Interactive dashboards, like the World Cup 2026 one", "Rich link previews when shared on social media"],
     tags: ["HTML", "CSS", "Vercel"]
   },
   {
-    name: "Goranovi lešnici",
-    url: "https://lesnici-sajt.vercel.app",
-    sr: "Sajt za naručivanje lešnika sa admin panelom. Porudžbine stižu u Google Sheet, a kupac automatski dobija potvrdu mejlom.",
-    en: "A hazelnut ordering site with an admin panel. Orders land in a Google Sheet and customers get an automatic email confirmation.",
+    name: "Goranovi lešnici", url: "https://lesnici-sajt.vercel.app", img: "lesnici.webp",
+    sr: "Sajt na kome kolege naručuju pečene i sirove lešnike, sa admin panelom za mene.",
+    en: "A site where colleagues order roasted and raw hazelnuts, with an admin panel for me.",
+    f_sr: ["Izbor proizvoda i količine u par klikova", "Porudžbine se same upisuju u Google Sheet", "Automatska potvrda kupcu i obaveštenje meni mejlom", "Admin panel za praćenje uplata i preuzimanja"],
+    f_en: ["Pick products and quantities in a few clicks", "Orders are written to a Google Sheet automatically", "Automatic email confirmation to the buyer and a notification to me", "Admin panel to track payments and pickups"],
     tags: ["Google Apps Script", "Google Sheets", "Vercel"]
   },
   {
-    name: "FC27 Liga",
-    url: "https://inspira-fc27liga.vercel.app",
-    sr: "Sajt EA FC 27 turnira za kolege: tabela lige, plej-of za 12 igrača i admin panel za unos rezultata.",
-    en: "An EA FC 27 tournament site for colleagues: league table, a 12-player playoff and an admin panel for results.",
+    name: "FC27 Liga", url: "https://inspira-fc27liga.vercel.app", img: "fc27.webp",
+    sr: "Sajt EA FC 27 turnira za kolege iz Inspira grupe.",
+    en: "An EA FC 27 tournament site for colleagues at Inspira Group.",
+    f_sr: ["Tabela lige i raspored po kolima", "Plej-of za 12 igrača", "Stranice za strelce, timove i pravila", "Admin panel za unos rezultata koji se odmah vide na sajtu"],
+    f_en: ["League table and fixtures by round", "12-player playoff bracket", "Pages for top scorers, teams and rules", "Admin panel for results that appear on the site instantly"],
     tags: ["Supabase", "Vercel"]
   },
   {
-    name: "nagradneigre.org",
-    url: "https://nagradneigre.org",
-    sr: "Agregator nagradnih igara u Srbiji, sa admin panelom, sistemom banera i automatskim statusom svake igre.",
-    en: "A giveaway aggregator for Serbia, with an admin panel, a banner system and automatic status for every contest.",
+    name: "nagradneigre.org", url: "https://nagradneigre.org", img: "nagradneigre.webp",
+    sr: "Agregator nagradnih igara u Srbiji.",
+    en: "A giveaway aggregator for Serbia.",
+    f_sr: ["Sve aktuelne nagradne igre na jednom mestu", "Admin panel za dodavanje i uređivanje igara", "Sistem banera za istaknute igre", "Automatski status: aktivna ili završena"],
+    f_en: ["All current giveaways in one place", "Admin panel to add and edit contests", "Banner system for featured contests", "Automatic status: active or finished"],
     tags: ["Next.js", "Google Sheets", "Vercel"]
   },
   {
-    name: "Generator ugovora",
-    name_en: "Contract generator",
-    internal: true,
-    sr: "Uneseš PIB ili matični broj, alat povuče podatke firme i za par sekundi popuni ugovor o oglašavanju na 4zida.rs.",
-    en: "Enter a company's tax or registration number and the tool pulls its details and fills in the 4zida.rs advertising contract in seconds.",
+    name: "Generator ugovora", name_en: "Contract generator", internal: true, img: "ugovori.webp",
+    sr: "Alat koji za par sekundi popunjava ugovor o oglašavanju na 4zida.rs.",
+    en: "A tool that fills in the 4zida.rs advertising contract in seconds.",
+    f_sr: ["Pretraga firme po PIB-u ili matičnom broju", "Tri tipa ugovora: mesec za mesec, avans 6 i avans 12 meseci", "Unos paketa i dogovorenih pogodnosti", "Pregled ugovora preuzetih u poslednjih 7 dana"],
+    f_en: ["Company lookup by tax or registration number", "Three contract types: month-to-month, 6-month and 12-month prepaid", "Package and agreed benefits entry", "List of contracts downloaded in the last 7 days"],
     tags: ["Vercel", "API"]
   },
   {
-    name: "Raspodela poziva",
-    name_en: "Call distribution",
-    internal: true,
-    sr: "Interni dashboard koji ravnomerno raspoređuje pozive prodajnom timu, sa istorijom i grafikonima trenda.",
-    en: "An internal dashboard that distributes calls evenly across the sales team, with history and trend charts.",
+    name: "Raspodela poziva", name_en: "Call distribution", internal: true, img: "raspodela.webp",
+    sr: "Interni dashboard koji ravnomerno raspoređuje pozive prodajnom timu.",
+    en: "An internal dashboard that splits calls evenly across the sales team.",
+    f_sr: ["Raspodela po gradovima i savetnicima", "Nivelacija, da niko ne zove mnogo više od ostalih", "Istorija po danima sa grafikonom trenda", "Zajednička baza za ceo tim i prikaz prilagođen telefonu"],
+    f_en: ["Distribution by city and by advisor", "Leveling, so nobody calls far more than the rest", "Daily history with a trend chart", "Shared data for the whole team and a phone-friendly layout"],
     tags: ["Google Apps Script", "Google Sheets", "Vercel"]
   },
   {
-    name: "Mozgalice",
-    url: "",
-    sr: "Igre za mozak u stilu LinkedIn zagonetki: Spajalica, Blokovi i još nekoliko, sa nivoima, tajmerom i bodovima.",
-    en: "Brain games in the style of LinkedIn puzzles: Spajalica, Blokovi and more, with levels, a timer and scoring.",
+    name: "Podela oglasa", name_en: "Ad call lists", internal: true, prototype: true, img: "admin.webp",
+    sr: "Unapređenje 4zida admina: liste za pozivanje se same slažu, a plaćeni oglasi nestaju sa njih.",
+    en: "An upgrade to the 4zida admin: call lists build themselves and paid listings drop off.",
+    f_sr: ["Odvojene sekcije: baza po gradovima, draft i zahtevi", "Oglasi poređani po datumu isteka", "Automatski uklanja uplaćene i ranije kupce", "Grupni unos datuma poziva i dodela savetnika"],
+    f_en: ["Separate sections: database by city, drafts and payment requests", "Listings sorted by expiry date", "Automatically removes paid and returning customers", "Bulk call dates and advisor assignment"],
+    tags: ["HTML", "Google Sheets"]
+  },
+  {
+    name: "Mozgalice", url: "", img: "mozgalice.webp",
+    sr: "Igre za mozak u stilu LinkedIn zagonetki.",
+    en: "Brain games in the style of LinkedIn puzzles.",
+    f_sr: ["Spajalica i Blokovi, plus kraljice, tango, mini sudoku i nonogram", "Nivoi težine", "Tajmer i bodovanje prema vremenu"],
+    f_en: ["Spajalica and Blokovi, plus queens, tango, mini sudoku and nonogram", "Difficulty levels", "Timer and time-based scoring"],
     tags: ["JavaScript"]
   },
   {
-    name: "Od leske do kese",
-    name_en: "From orchard to bag",
-    url: "",
+    name: "Od leske do kese", name_en: "From orchard to bag", url: "https://lesnici-sajt.vercel.app/prica", img: "prica.webp",
     sr: "Animirani sajt koji skrolovanjem priča put lešnika od voćnjaka do kese.",
-    en: "An animated site that tells the story of a hazelnut, from orchard to bag, as you scroll.",
-    tags: ["JavaScript", "Scroll animacije"]
+    en: "An animated site that tells a hazelnut's journey from orchard to bag as you scroll.",
+    f_sr: ["Priča koja se odvija dok skroluješ", "Animacije vezane za skrol", "Na kraju vodi pravo na poručivanje"],
+    f_en: ["A story that unfolds as you scroll", "Scroll-driven animations", "Ends with a direct path to ordering"],
+    tags: ["JavaScript", "GSAP"]
   },
   {
-    name: "Mundijal 2026 – kilometraža",
-    name_en: "World Cup 2026 – travel distances",
-    url: "https://16erac.com/mundijal.html",
+    name: "Mundijal 2026 – kilometraža", name_en: "World Cup 2026 – travel distances", url: "https://16erac.com/mundijal", img: "mundijal.webp",
     sr: "Interaktivni prikaz koliko kilometara letovima prelazi svaka reprezentacija na Svetskom prvenstvu 2026.",
-    en: "An interactive look at how many kilometres each national team flies during the 2026 World Cup.",
+    en: "An interactive look at how far each national team flies during the 2026 World Cup.",
+    f_sr: ["Kilometraža za grupnu fazu i ceo turnir", "Rang lista svih 48 reprezentacija", "Animirana mapa letova za svaku ekipu"],
+    f_en: ["Distances for the group stage and the whole tournament", "Ranking of all 48 national teams", "Animated flight map for every team"],
     tags: ["HTML", "SVG"]
   },
   {
-    name: "Motion grafike",
-    name_en: "Motion graphics",
-    url: "",
-    noLink: true,
-    sr: "Animacije za društvene mreže koje pravim kodom i renderujem u video: poređenja, mape i karijere igrača.",
-    en: "Social media animations I create with code and render to video: comparisons, maps and player careers.",
+    name: "Motion grafike", name_en: "Motion graphics", url: "", noLink: true, img: "motion.webp",
+    sr: "Animacije za društvene mreže koje pravim kodom i renderujem u video.",
+    en: "Social media animations I create with code and render to video.",
+    f_sr: ["Vertikalni format za Reels, TikTok i Shorts", "Poređenja, mape, karijere igrača i taktičke table", "Renderovanje kadar po kadar u MP4"],
+    f_en: ["Vertical format for Reels, TikTok and Shorts", "Comparisons, maps, player careers and tactics boards", "Frame-by-frame rendering to MP4"],
     tags: ["Playwright", "ffmpeg", "CapCut"]
   }
 ];
@@ -387,14 +310,14 @@ const T = {
     bio1: "Ceo radni vek sam u prodaji i brizi o korisnicima. Tu sam naučio da slušam ljude i rešavam njihove stvarne probleme. Isti pristup sam preneo na tehnologiju: uz pomoć AI alata samostalno sam naučio da dizajniram i pravim digitalne proizvode, automatizujem procese i gradim rešenja za svakodnevne potrebe koja štede vreme i podižu efikasnost.",
     bio2: "Pored toga sam digitalni kreator: snimam i montiram sadržaj za društvene mreže.",
     email: "Pošalji mejl",
+    projTitle: "Moji projekti",
     expTitle: "Iskustvo",
     when: "Oktobar 2021 – danas",
     jobText: "Savetujem poslovne klijente kako da izvuku najviše iz oglašavanja na 4zida.rs, portalu za nekretnine u okviru Inspira grupe. Pored prodaje, za svoj tim pravim interne alate koji štede vreme, od raspodele poziva do automatskog popunjavanja ugovora.",
-    projTitle: "Projekti",
-    projNote: "Svaki od ovih projekata napravio sam uz AI, od prve ideje do sajta koji radi.",
     stackTitle: "Alati s kojima radim",
     outro: "Imaš ideju za sajt ili alat koji bi ti uštedeo vreme? Piši mi.",
     internal: "Interni alat, nije javan",
+    prototype: "Interni prototip",
     soon: "Link uskoro",
     video: "Video sadržaj"
   },
@@ -404,59 +327,58 @@ const T = {
     bio1: "I've spent my whole career in sales and customer care, where I learned to listen to people and solve their real problems. I brought the same approach to technology: with AI tools, I taught myself to design and build digital products, automate processes and create solutions for everyday needs that save time and boost efficiency.",
     bio2: "I'm also a digital creator, filming and editing content for social media.",
     email: "Send an email",
+    projTitle: "My projects",
     expTitle: "Experience",
     when: "October 2021 – present",
     jobText: "I advise business clients on getting the most out of advertising on 4zida.rs, the real estate platform within Inspira Group. Alongside sales, I build internal tools that save my team time, from call distribution to automatic contract filling.",
-    projTitle: "Projects",
-    projNote: "I built each of these with AI, from the first idea to a working site.",
     stackTitle: "Tools I work with",
     outro: "Have an idea for a site or tool that would save you time? Write to me.",
     internal: "Internal tool, not public",
+    prototype: "Internal prototype",
     soon: "Link coming soon",
     video: "Video content"
   }
 };
 
-function host(u){ try{ return new URL(u).host + (new URL(u).pathname.length > 1 ? new URL(u).pathname : ""); }catch(e){ return u; } }
+function host(u){ try{ const x=new URL(u); return x.host + (x.pathname.length > 1 ? x.pathname : ""); }catch(e){ return u; } }
+function el(tag, cls, text){ const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+function linkify(e, url){ e.href=url; e.target="_blank"; e.rel="noopener"; return e; }
 
 function renderProjects(lang){
   const list = document.getElementById("projects");
   list.innerHTML = "";
   PROJECTS.forEach(p => {
-    const li = document.createElement("li");
-    li.className = "project";
     const name = (lang === "en" && p.name_en) ? p.name_en : p.name;
-    let status;
-    if (p.internal) status = T[lang].internal;
-    else if (p.noLink) status = T[lang].video;
-    else if (p.url) status = host(p.url);
-    else status = T[lang].soon;
+    const li = el("li", "project");
 
-    const wrap = document.createElement(p.url ? "a" : "div");
-    if (p.url){ wrap.href = p.url; wrap.target = "_blank"; wrap.rel = "noopener"; }
+    const thumb = p.url ? linkify(el("a","thumb"), p.url) : el("div","thumb");
+    if (p.url) thumb.setAttribute("aria-label", name);
+    const img = el("img"); img.src = "/goran/shot-" + p.img; img.alt = ""; img.loading = "lazy"; img.width = 960; img.height = 600;
+    thumb.append(img);
 
-    const head = document.createElement("div"); head.className = "project-head";
-    const h3 = document.createElement("h3"); h3.textContent = name;
-    const st = document.createElement("span"); st.className = "status"; st.textContent = status;
+    const body = el("div","project-body");
+    const head = el("div","project-head");
+    const h3 = el("h3");
+    if (p.url) h3.append(linkify(el("a", null, name), p.url)); else h3.textContent = name;
+    let st;
+    if (p.url) st = linkify(el("a","status", host(p.url)), p.url);
+    else st = el("span","status", p.prototype ? T[lang].prototype : p.internal ? T[lang].internal : p.noLink ? T[lang].video : T[lang].soon);
     head.append(h3, st);
 
-    const desc = document.createElement("p"); desc.textContent = p[lang];
+    const ul = el("ul","features");
+    (lang === "en" ? p.f_en : p.f_sr).forEach(t => ul.append(el("li", null, t)));
+    const tags = el("ul","tags");
+    p.tags.forEach(t => tags.append(el("li", null, t)));
 
-    const tags = document.createElement("ul"); tags.className = "tags";
-    p.tags.forEach(t => { const x = document.createElement("li"); x.textContent = t; tags.append(x); });
-
-    wrap.append(head, desc, tags);
-    li.append(wrap);
+    body.append(head, el("p", null, p[lang]), ul, tags);
+    li.append(thumb, body);
     list.append(li);
   });
 }
 
 function setLang(lang){
   document.documentElement.lang = lang;
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const k = el.getAttribute("data-i18n");
-    if (T[lang][k]) el.textContent = T[lang][k];
-  });
+  document.querySelectorAll("[data-i18n]").forEach(e => { const k=e.getAttribute("data-i18n"); if (T[lang][k]) e.textContent = T[lang][k]; });
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
   renderProjects(lang);
   try { localStorage.setItem("lang", lang); } catch(e){}
@@ -465,59 +387,35 @@ function setLang(lang){
 (function initLang(){
   let lang = null;
   try { lang = localStorage.getItem("lang"); } catch(e){}
-  if (!lang){
-    const nav = (navigator.language || "sr").toLowerCase();
-    lang = /^(sr|hr|bs|sh|cnr|me)/.test(nav) ? "sr" : "en";
-  }
+  if (!lang){ const nav=(navigator.language||"sr").toLowerCase(); lang = /^(sr|hr|bs|sh|cnr|me)/.test(nav) ? "sr" : "en"; }
   setLang(lang);
   document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
   document.getElementById("year").textContent = new Date().getFullYear();
 })();
 
-/* ============================================================
-   AKTIVNA POZADINA – mreža tačaka koja se lagano talasa
-   i zasvetli oko kursora.
-   ============================================================ */
+/* Aktivna pozadina: mreža tačaka koja se lagano talasa i zasvetli oko kursora */
 (function field(){
-  const c = document.getElementById("field");
-  const ctx = c.getContext("2d");
+  const c = document.getElementById("field"), ctx = c.getContext("2d");
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const GAP = 30;
-  let w, h, dpr, cols, rows, mx = -9999, my = -9999, running = true;
-
-  function size(){
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    w = window.innerWidth; h = window.innerHeight;
-    c.width = w * dpr; c.height = h * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cols = Math.ceil(w / GAP) + 1; rows = Math.ceil(h / GAP) + 1;
-  }
-
+  const GAP = 30; let w, h, dpr, cols, rows, mx = -9999, my = -9999, running = true;
+  function size(){ dpr=Math.min(window.devicePixelRatio||1,2); w=window.innerWidth; h=window.innerHeight; c.width=w*dpr; c.height=h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); cols=Math.ceil(w/GAP)+1; rows=Math.ceil(h/GAP)+1; }
   function draw(t){
-    ctx.clearRect(0, 0, w, h);
-    const time = t * 0.00035;
-    for (let i = 0; i < cols; i++){
-      for (let j = 0; j < rows; j++){
-        const x = i * GAP, y = j * GAP;
-        const wave = (Math.sin(x * 0.006 + time) + Math.cos(y * 0.008 - time * 0.8) + Math.sin((x + y) * 0.004 + time * 0.6)) / 3;
-        let a = 0.05 + Math.max(0, wave) * 0.16;
-        let r = 1 + Math.max(0, wave) * 0.6;
-        const dx = x - mx, dy = y - my, d = Math.sqrt(dx*dx + dy*dy);
-        if (d < 170){ const k = 1 - d / 170; a += k * 0.55; r += k * 1.2; }
-        ctx.fillStyle = "rgba(200,240,60," + a.toFixed(3) + ")";
-        ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
-      }
+    ctx.clearRect(0,0,w,h); const time=t*0.00035;
+    for (let i=0;i<cols;i++) for (let j=0;j<rows;j++){
+      const x=i*GAP, y=j*GAP;
+      const wave=(Math.sin(x*0.006+time)+Math.cos(y*0.008-time*0.8)+Math.sin((x+y)*0.004+time*0.6))/3;
+      let a=0.05+Math.max(0,wave)*0.16, r=1+Math.max(0,wave)*0.6;
+      const dx=x-mx, dy=y-my, d=Math.sqrt(dx*dx+dy*dy);
+      if (d<170){ const k=1-d/170; a+=k*0.55; r+=k*1.2; }
+      ctx.fillStyle="rgba(200,240,60,"+a.toFixed(3)+")"; ctx.beginPath(); ctx.arc(x,y,r,0,6.2832); ctx.fill();
     }
   }
-
   function loop(t){ if (running) draw(t); requestAnimationFrame(loop); }
-
   size();
   window.addEventListener("resize", () => { size(); if (reduce) draw(0); });
-  window.addEventListener("pointermove", e => { mx = e.clientX; my = e.clientY; if (reduce) draw(0); }, { passive: true });
-  window.addEventListener("pointerleave", () => { mx = my = -9999; });
+  window.addEventListener("pointermove", e => { mx=e.clientX; my=e.clientY; if (reduce) draw(0); }, { passive:true });
+  window.addEventListener("pointerleave", () => { mx=my=-9999; });
   document.addEventListener("visibilitychange", () => { running = !document.hidden; });
-
   if (reduce) draw(0); else requestAnimationFrame(loop);
 })();
 </script>
