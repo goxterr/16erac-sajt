@@ -103,7 +103,7 @@ h2{margin:0 0 24px;font-weight:800;font-variation-settings:"wdth" 118;font-size:
 .lb-sub{font-weight:500;font-variation-settings:"wdth" 100;font-size:.9375rem;color:var(--muted)}
 .lb-links{display:flex;flex-wrap:wrap;gap:8px}
 body.lb-open{overflow:hidden}
-.media{position:sticky;top:24px}
+.media{position:relative}
 .strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:8px}
 .mini{padding:0;border:1px solid var(--line);border-radius:7px;overflow:hidden;aspect-ratio:16/10;background:var(--surface);cursor:zoom-in;transition:border-color .2s}
 .mini img{width:100%;height:100%;object-fit:cover;object-position:top center}
@@ -112,6 +112,14 @@ body.lb-open{overflow:hidden}
 .project-links{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px;align-items:center}
 .status-text{font-size:.875rem;color:var(--muted)}
 .project .intro{margin:12px 0 4px;color:var(--text-2)}
+.details{position:relative;overflow:hidden;transition:max-height .45s ease}
+.details.collapsed{max-height:118px}
+.details.collapsed::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(to bottom, rgba(14,36,25,0), var(--bg) 92%);pointer-events:none}
+.more{display:inline-flex;align-items:center;gap:7px;margin:4px 0 14px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(21,54,42,.7);color:var(--text);font:600 .8125rem/1 var(--font);cursor:pointer;transition:border-color .2s, color .2s}
+.more:hover{border-color:var(--lime);color:var(--lime)}
+.more svg{width:14px;height:14px;transition:transform .25s;color:var(--lime)}
+.more[aria-expanded="true"] svg{transform:rotate(180deg)}
+.more[hidden]{display:none}
 .project h4{margin:16px 0 8px;font-size:.8125rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lime)}
 .project h3{margin:0;font-weight:800;font-variation-settings:"wdth" 110;font-size:clamp(1.25rem,1.8vw,1.55rem);line-height:1.15}
 .project h3 a{text-decoration:none}
@@ -143,7 +151,7 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
 
 @media (max-width: 1180px){
   .project{grid-template-columns:1fr;gap:16px}
-  .media{position:static;max-width:560px}
+  .media{max-width:560px}
 }
 @media (max-width: 900px){
   .page{grid-template-columns:1fr}
@@ -266,8 +274,8 @@ const PROJECTS = [
     name: "16ERAC",
     links: [
       { url: "https://16erac.com" },
-      { url: "https://16erac.com/mundijal" },
-      { url: "https://16erac.com/giveaway" }
+      { url: "https://16erac.com/mundijal", sr: "Kilometri Mundijala", en: "World Cup distances" },
+      { url: "https://16erac.com/giveaway", sr: "Giveaway", en: "Giveaway" }
     ],
     imgs: [
       { f: "16erac.webp", sr: "Početna strana", en: "Home page" },
@@ -323,8 +331,8 @@ const PROJECTS = [
       { f: "fc27.webp", sr: "Javni sajt lige", en: "Public league site" },
       { f: "fc27-admin.webp", sr: "Admin panel", en: "Admin panel" }
     ],
-    intro_sr: "Sajt internog EA FC 27 turnira za oko 20 kolega iz Inspira grupe. Sajt je prvobitno napravio kolega, a ja sam ga preneo na svoje naloge, prilagodio novoj sezoni i nastavio da razvijam.",
-    intro_en: "The site for an internal EA FC 27 tournament for about 20 colleagues at Inspira Group. A colleague built the original site; I moved it to my own accounts, set it up for the new season and kept developing it.",
+    intro_sr: "Sajt internog EA FC 27 turnira za oko 20 kolega iz Inspira grupe, sa javnim delom za igrače i admin panelom za vođenje cele lige.",
+    intro_en: "The site for an internal EA FC 27 tournament for about 20 colleagues at Inspira Group, with a public side for players and an admin panel that runs the whole league.",
     groups: [
       { sr: "Javni sajt", en: "Public site",
         f_sr: ["Tabela lige, raspored po kolima i poslednji rezultati", "Plej-of za 12 igrača", "Strelci, timovi, pravila i obaveštenja", "Slike igrača i oznake plasmana iz prošle sezone"],
@@ -433,6 +441,8 @@ const T = {
     video: "Video sadržaj",
     zoom: "Uvećaj sliku",
     images: "slike",
+    more: "Prikaži sve detalje",
+    less: "Sakrij detalje",
     prev: "Prethodna slika",
     next: "Sledeća slika",
     close: "Zatvori",
@@ -456,6 +466,8 @@ const T = {
     video: "Video content",
     zoom: "Enlarge image",
     images: "images",
+    more: "Show all details",
+    less: "Hide details",
     prev: "Previous image",
     next: "Next image",
     close: "Close",
@@ -559,13 +571,29 @@ function renderProjects(lang){
     if (p.status) links.append(el("span","status-text", T[lang][p.status]));
     body.append(links);
     body.append(el("p","intro", lang === "en" ? p.intro_en : p.intro_sr));
+    const det = el("div","details collapsed");
     p.groups.forEach(g => {
       const title = lang === "en" ? g.en : g.sr;
-      if (title) body.append(el("h4", null, title));
+      if (title) det.append(el("h4", null, title));
       const ul = el("ul","features");
       (lang === "en" ? g.f_en : g.f_sr).forEach(t => ul.append(el("li", null, t)));
-      body.append(ul);
+      det.append(ul);
     });
+    const more = el("button","more"); more.type = "button"; more.setAttribute("aria-expanded","false");
+    const lbl = el("span", null, T[lang].more);
+    more.append(lbl); more.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>');
+    more.addEventListener("click", () => {
+      const open = more.getAttribute("aria-expanded") === "true";
+      if (open){
+        det.style.maxHeight = det.scrollHeight + "px";
+        requestAnimationFrame(() => { det.classList.add("collapsed"); det.style.maxHeight = ""; });
+        more.setAttribute("aria-expanded","false"); lbl.textContent = T[lang].more;
+      } else {
+        det.style.maxHeight = det.scrollHeight + "px"; det.classList.remove("collapsed"); setTimeout(() => { if (more.getAttribute("aria-expanded") === "true") det.style.maxHeight = "none"; }, 500);
+        more.setAttribute("aria-expanded","true"); lbl.textContent = T[lang].less;
+      }
+    });
+    body.append(det, more);
     const tags = el("ul","tags");
     p.tags.forEach(t => tags.append(el("li", null, t)));
     body.append(tags);
@@ -573,7 +601,21 @@ function renderProjects(lang){
     li.append(media, body);
     list.append(li);
   });
+  fitDetails();
 }
+
+/* Dugme „Prikaži sve” samo tamo gde detalji ne staju u skraćeni prikaz */
+function fitDetails(){
+  document.querySelectorAll(".project").forEach(li => {
+    const det = li.querySelector(".details"), more = li.querySelector(".more");
+    if (!det || more.getAttribute("aria-expanded") === "true") return;
+    const fits = det.scrollHeight <= 128;
+    det.classList.toggle("collapsed", !fits);
+    more.hidden = fits;
+  });
+}
+window.addEventListener("resize", () => { clearTimeout(window.__fit); window.__fit = setTimeout(fitDetails, 150); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitDetails);
 
 function setLang(lang){
   document.documentElement.lang = lang;
