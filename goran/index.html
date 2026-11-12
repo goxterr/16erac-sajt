@@ -65,6 +65,7 @@ img{max-width:100%;display:block}
 .btn:hover{border-color:var(--lime);background:var(--lime-soft)}
 .btn--main{background:var(--lime);color:var(--bg-deep);border-color:var(--lime)}
 .btn--main:hover{background:#D6F76A}
+.lbl-short{display:none}
 
 /* Desna strana */
 .content{padding:clamp(88px,12vh,140px) clamp(24px,5vw,80px) 72px}
@@ -130,9 +131,20 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
 }
 @media (max-width: 900px){
   .page{grid-template-columns:1fr}
-  .portrait{--top:72px;--fs:clamp(3.4rem, 21vw, 9rem);position:relative;height:min(94svh, 860px);min-height:600px;border-right:0;border-bottom:1px solid var(--line)}
+  .portrait{--top:72px;--fs:clamp(3.2rem, 18.5vw, 8.5rem);position:relative;height:min(94svh, 860px);min-height:600px;border-right:0;border-bottom:1px solid var(--line)}
   .content{padding-top:56px}
+  .name{line-height:1.04}
+  .caption{padding-left:16px;padding-right:16px}
+  .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .btn{justify-content:center;gap:6px;padding:11px 6px;font-size:.875rem;white-space:nowrap}
+  .btn svg{width:15px;height:15px}
+  .lbl-long{display:none}
+  .lbl-short{display:inline}
   .lang{top:14px;right:14px}
+}
+@media (max-width: 380px){
+  .btn{font-size:.8125rem;gap:5px;padding:10px 4px}
+  .btn svg{width:14px;height:14px}
 }
 @media (max-width: 480px){
   .job{grid-template-columns:1fr;padding:20px}
@@ -160,7 +172,7 @@ footer{margin-top:40px;color:var(--muted);font-size:.875rem}
       <div class="links">
         <a class="btn btn--main" id="mailBtn" href="mailto:bilic.goran7@gmail.com">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-          <span data-i18n="email">Pošalji mejl</span>
+          <span class="lbl-long" data-i18n="email">Pošalji mejl</span><span class="lbl-short" data-i18n="emailShort">Mejl</span>
         </a>
         <a class="btn" href="https://www.linkedin.com/in/goranbilic/" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11H3v-11Zm6.5 0h3.8v1.5h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v5.46h-4v-4.84c0-1.16-.02-2.64-1.61-2.64-1.61 0-1.86 1.26-1.86 2.56v4.92h-4v-11Z"/></svg>
@@ -318,6 +330,7 @@ const T = {
     bio1: "Ceo radni vek sam u prodaji i brizi o korisnicima. Tu sam naučio da slušam ljude i rešavam njihove stvarne probleme. Isti pristup sam preneo na tehnologiju: uz pomoć AI alata samostalno sam naučio da dizajniram i pravim digitalne proizvode, automatizujem procese i gradim rešenja za svakodnevne potrebe koja štede vreme i podižu efikasnost.",
     bio2: "Pored toga sam digitalni kreator: snimam i montiram sadržaj za društvene mreže.",
     email: "Pošalji mejl",
+    emailShort: "Mejl",
     projTitle: "Moji projekti",
     expTitle: "Iskustvo",
     when: "Oktobar 2021 – danas",
@@ -337,6 +350,7 @@ const T = {
     bio1: "I've spent my whole career in sales and customer care, where I learned to listen to people and solve their real problems. I brought the same approach to technology: with AI tools, I taught myself to design and build digital products, automate processes and create solutions for everyday needs that save time and boost efficiency.",
     bio2: "I'm also a digital creator, filming and editing content for social media.",
     email: "Send an email",
+    emailShort: "Email",
     projTitle: "My projects",
     expTitle: "Experience",
     when: "October 2021 – present",
